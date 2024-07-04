@@ -1,9 +1,9 @@
 package heijunka.repository;
 
-import heijunka.entite.Resources;
+import heijunka.entite.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ResourcesRepo extends JpaRepository<Resources, Long> {
+public interface ProductRepo extends JpaRepository<Product, Long> {
 }

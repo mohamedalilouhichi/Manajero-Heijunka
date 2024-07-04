@@ -1,9 +1,9 @@
 package heijunka.entite;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -11,8 +11,11 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idProduct;
+
+    @OneToMany(mappedBy = "product")
+    private Set<ProductionAnomaly> productionAnomalies;
 }

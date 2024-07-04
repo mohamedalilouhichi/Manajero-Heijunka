@@ -1,4 +1,5 @@
 package heijunka.entite;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,17 +11,17 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idOrder;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Resources> Resources;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<ProductionAnomaly> ProductionAnomalys;
-
     @ManyToOne
-    User user;
+    private User user;
+
+    @OneToOne
+    private ProductionPlan productionPlan;
+
+    @OneToMany(mappedBy = "orders")
+    private Set<ProductionAnomaly> productionAnomalies;
 }

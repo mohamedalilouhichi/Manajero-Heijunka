@@ -14,6 +14,10 @@ public class ProductionData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idData;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    User user;
+
+    @ManyToOne
     Report report;
+
 }

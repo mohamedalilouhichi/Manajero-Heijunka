@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/resources")
-public class ResourcesControl {
+@RequestMapping("/ProductionPlan")
+public class ProductionPlanControl {
 }

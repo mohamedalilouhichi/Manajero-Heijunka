@@ -16,6 +16,6 @@ public class HeijunkaBox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idBox;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Resources> Resources;
+    @OneToOne(mappedBy="heijunkabox")
+    private ProductionPlan productionplan;
 }

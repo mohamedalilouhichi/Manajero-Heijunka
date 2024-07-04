@@ -17,6 +17,6 @@ public class ProductionPlan {
     private long idPlan;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<HeijunkaBox> HeijunkaBoxs;
+    @OneToOne
+    private HeijunkaBox heijunkabox;
 }
