@@ -1,21 +1,19 @@
 package heijunka.entite;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
-@Entity
+@Data
+@Document(collection = "heijunka_box")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
 public class HeijunkaBox {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idBox;
+    private String id;
 
-    @OneToOne(mappedBy="heijunkabox")
-    private ProductionPlan productionplan;
+    private String productionPlanId;
 }

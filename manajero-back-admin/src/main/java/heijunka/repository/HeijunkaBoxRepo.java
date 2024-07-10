@@ -2,9 +2,9 @@ package heijunka.repository;
 
 
 import heijunka.entite.HeijunkaBox;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 @Repository
-public interface HeijunkaBoxRepo extends JpaRepository<HeijunkaBox, Long> {
+public interface HeijunkaBoxRepo extends MongoRepository<HeijunkaBox, Long> {
 }

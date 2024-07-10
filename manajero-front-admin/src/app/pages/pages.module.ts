@@ -5,7 +5,7 @@ import {
   NbCardModule,
   NbMenuModule,
   NbStepperModule,
-  NbTabsetModule
+  NbTabsetModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -15,9 +15,14 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import {HeijunkaComponent} from '../heijunka/heijunka.component';
+import {HttpClientModule} from '@angular/common/http';
+import {AngularEditorModule} from '@kolkov/angular-editor';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
+    FormsModule,
+    AngularEditorModule,
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
@@ -29,6 +34,8 @@ import {HeijunkaComponent} from '../heijunka/heijunka.component';
     NbButtonModule,
     NbTabsetModule,
     NbAccordionModule,
+    HttpClientModule,
+
   ],
   declarations: [
     PagesComponent,

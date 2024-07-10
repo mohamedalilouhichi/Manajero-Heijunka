@@ -1,9 +1,9 @@
 package heijunka.repository;
 
 import heijunka.entite.Report;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReportRepo extends JpaRepository<Report, Long> {
+public interface ReportRepo extends MongoRepository<Report, Long> {
 }

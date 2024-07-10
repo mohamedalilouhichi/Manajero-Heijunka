@@ -1,21 +1,19 @@
 package heijunka.entite;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
+@Document(collection = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idProduct;
+    private String idProduct;
 
-    @OneToMany(mappedBy = "product")
-    private Set<ProductionAnomaly> productionAnomalies;
+    private Set<String> productionAnomalyIds;
 }

@@ -22,153 +22,67 @@
       <nb-tabset>
         <nb-tab tabTitle="Purpose">
           <div class="scrollable-content">
-            <h5>The "What" of Heijunka</h5>
-            <p><strong>Heijunka</strong> is a Japanese term that translates to "leveling" or "production smoothing." This lean manufacturing technique aims to minimize waste and enhance production efficiency by balancing the type and quantity of production over a specific period. By evenly distributing production, Heijunka addresses and reduces the unevenness in production volumes and types, known as Mura, resulting in a more consistent and efficient production schedule.</p>
-            <h6>Key Elements</h6>
-            <ul>
-              <li><strong>Level Production:</strong> Ensures a consistent production rate to meet customer demand without fluctuations.</li>
-              <li><strong>Mixed Model Production:</strong> Involves producing a variety of products in smaller batches within the same production period to avoid bottlenecks and reduce inventory.</li>
-              <li><strong>Takt Time Alignment:</strong> Aligns production speed with customer demand rate, ensuring that products are made at a pace that meets demand without overproduction.</li>
-            </ul>
+            <button nbButton shape="round" size="tiny" status="dark" (click)="startEditingPurpose()" style="float: left; margin-left: 430px;">Edit</button>
 
-            <h6>Purpose</h6>
-            <ul>
-              <li><strong>Reduce Waste:</strong> By leveling out production, Heijunka minimizes overproduction, waiting times, and excess inventory.</li>
-              <li><strong>Improve Efficiency:</strong> It ensures a smooth flow of work and materials, leading to better resource utilization and reduced lead times.</li>
-              <li><strong>Enhance Flexibility:</strong> Allows manufacturers to respond quickly to changes in customer demand and market conditions without significant disruptions.</li>
-            </ul>
-
-            <h6>Benefits</h6>
-            <ul>
-              <li><strong>Stability in Production:</strong> Reduces the volatility and stress on the production system, leading to more predictable outcomes.</li>
-              <li><strong>Quality Improvement:</strong> Consistent production processes help in maintaining and improving product quality.</li>
-              <li><strong>Cost Reduction:</strong> Minimizes costs associated with excess inventory, overtime, and expedited shipping due to sudden demand changes.</li>
-            </ul>
+            <!-- Display initial content -->
+            <div *ngIf="!isEditingPurpose; else editPurpose">
+              <div [innerHTML]="purposeContent"></div>
+            </div>
+            <!-- Edit mode -->
+            <ng-template #editPurpose>
+              <angular-editor [(ngModel)]="purposeContent" [config]="editorConfig"></angular-editor>
+              <button nbButton shape="round" size="tiny" status="dark"(click)="savePurposeChanges()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger"(click)="cancelEditing()">Cancel</button>
+            </ng-template>
           </div>
         </nb-tab>
 
         <nb-tab tabTitle="Motivation">
-          <div class="scrollable-content">
+            <div class="scrollable-content">
+              <button nbButton shape="round" size="tiny" status="dark"style="float: left; margin-left: 430px;"(click)="startEditingMotivation()">Edit</button>
 
-          <h5>The "Why" of Heijunka</h5>
-          <p><strong>Heijunka</strong> is implemented in lean manufacturing for several critical reasons, all aimed at optimizing the production process and improving overall efficiency. Here’s why Heijunka is important:</p>
-
-          <ol>
-            <li>
-              <h6>Reduce Variability and Unevenness (Mura)</h6>
-
-              <p><strong>Why it matters:</strong> Variability in production can lead to inefficiencies such as overproduction, excess inventory, and underutilization of resources. By leveling production, Heijunka helps create a more predictable and stable manufacturing process.</p>
-              <p><strong>Benefit:</strong> Smoother production flow reduces stress on workers and machinery, leading to fewer breakdowns and less downtime.</p>
-            </li>
-
-            <li>
-              <h6>Improve Efficiency and Productivity</h6>
-              <p><strong>Why it matters:</strong> Uneven production schedules can cause bottlenecks and idle times, reducing overall productivity. Heijunka ensures a balanced workload, optimizing resource use.</p>
-              <p><strong>Benefit:</strong> Enhanced productivity with consistent output, leading to better meeting of customer demands and deadlines.</p>
-            </li>
-
-            <li>
-              <h6>Enhance Flexibility and Responsiveness</h6>
-              <p><strong>Why it matters:</strong> Market demands can fluctuate, and a rigid production schedule may not accommodate these changes efficiently. Heijunka allows for a flexible approach to production that can quickly adapt to variations in demand.</p>
-              <p><strong>Benefit:</strong> Ability to respond to customer demands promptly, improving customer satisfaction and reducing the need for emergency measures like overtime or expedited shipping.</p>
-            </li>
-
-            <li>
-              <h6>Minimize Waste and Costs</h6>
-              <p><strong>Why it matters:</strong> Waste in manufacturing, such as overproduction, excess inventory, and unnecessary transportation, leads to higher costs. Heijunka helps in aligning production with actual demand, thereby minimizing these wastes.</p>
-              <p><strong>Benefit:</strong> Lower operational costs due to reduced waste, which in turn can lead to higher profit margins and more competitive pricing.</p>
-            </li>
-
-            <li>
-              <h6>Support Continuous Improvement (Kaizen)</h6>
-              <p><strong>Why it matters:</strong> A stable and leveled production system provides a better foundation for continuous improvement initiatives. Heijunka creates an environment where issues can be more easily identified and addressed.</p>
-              <p><strong>Benefit:</strong> Ongoing improvements in processes, quality, and efficiency, contributing to long-term operational excellence and innovation.</p>
-            </li>
-
-            <li>
-              <h6>Improve Quality</h6>
-              <p><strong>Why it matters:</strong> Fluctuations in production can lead to inconsistent quality as workers and machines may be overburdened or underutilized. By leveling the workload, Heijunka helps maintain consistent quality standards.</p>
-              <p><strong>Benefit:</strong> Higher and more consistent product quality, leading to fewer defects and returns, enhancing customer trust and satisfaction.</p>
-            </li>
-          </ol>
-
-          </div>
+              <!-- Display initial content -->
+              <div *ngIf="!isEditingMotivation; else editMotivation">
+                <div [innerHTML]="motivationContent"></div>
+              </div>
+              <!-- Edit mode -->
+              <ng-template #editMotivation>
+                <angular-editor [(ngModel)]="motivationContent" [config]="editorConfig"></angular-editor>
+                <button nbButton shape="round" size="tiny" status="dark"(click)="saveMotivationChanges()">Save</button>
+                <button nbButton shape="round" size="tiny" status="danger"(click)="cancelMotivationEditing()">Cancel</button>
+              </ng-template>
+            </div>
         </nb-tab>
         <nb-tab tabTitle="Method">
           <div class="scrollable-content">
-
-            <h5>The "How" of Heijunka</h5>
-            <p>Implementing Heijunka involves several steps and techniques to ensure a balanced and efficient production process. Here’s how Heijunka is put into practice:</p>
-
-            <ol>
-              <li>
-                <h6>Assess Current Production Process</h6>
-                <p>Start by analyzing the current production process to identify areas of variability and unevenness (Mura). Collect data on production volumes, lead times, and demand patterns.</p>
-              </li>
-
-              <li>
-                <h6>Calculate Takt Time</h6>
-                <p>Takt time is the rate at which products need to be produced to meet customer demand. Calculate takt time by dividing the available production time by the customer demand during that time period. This helps in aligning production speed with demand.</p>
-              </li>
-
-              <li>
-                <h6>Develop a Production Schedule</h6>
-                <p>Create a leveled production schedule that distributes the production load evenly over the production period. Use the calculated takt time to guide this schedule, ensuring a consistent flow of work.</p>
-              </li>
-
-              <li>
-                <h6>Implement Mixed Model Production</h6>
-                <p>Produce a variety of products in smaller batches within the same production period. This helps in reducing bottlenecks and minimizing inventory levels. Ensure that different products are mixed in a way that maintains a steady production flow.</p>
-              </li>
-
-              <li>
-                <h6>Use Heijunka Box</h6>
-                <p>A Heijunka box is a visual scheduling tool that helps in leveling production. It organizes and displays the production schedule, making it easier to monitor and manage the production process. Use the Heijunka box to visualize the work and ensure a balanced load.</p>
-              </li>
-
-              <li>
-                <h6>Monitor and Adjust</h6>
-                <p>Regularly monitor the production process to ensure it aligns with the leveled schedule. Make adjustments as needed to address any deviations or inefficiencies. Continuous monitoring helps in maintaining a balanced and efficient production system.</p>
-              </li>
-
-              <li>
-                <h6>Engage in Continuous Improvement (Kaizen)</h6>
-                <p>Encourage a culture of continuous improvement by involving employees in identifying areas for further leveling and efficiency gains. Use feedback and data from the production process to make ongoing adjustments and improvements.</p>
-              </li>
-            </ol>
-
-          </div>
+            <button nbButton shape="round" size="tiny" status="dark"style="float: left; margin-left: 430px;"(click)="startEditingMethod()">Edit</button>
+              <!-- Display initial content -->
+              <div *ngIf="!isEditingMethod; else editMethod">
+                <div [innerHTML]="methodContent"></div>
+              </div>
+              <ng-template #editMethod>
+                <angular-editor [(ngModel)]="methodContent" [config]="editorConfig"></angular-editor>
+                <button nbButton shape="round" size="tiny" status="dark"(click)="saveEditingMethod()">Save</button>
+                <button nbButton shape="round" size="tiny" status="danger"(click)="cancelEditingMethod()">Cancel</button>
+              </ng-template>
+            </div>
         </nb-tab>
         <nb-tab tabTitle="Hypotheses">
           <div class="scrollable-content">
-            <h5>The "What If" of Heijunka</h5>
-            <p><strong>Heijunka</strong> can be explored through Active Experimentation. This involves applying Heijunka principles to different scenarios, testing hypotheses, and evaluating potential outcomes.</p>
+            <button nbButton shape="round" size="tiny" status="dark"style="float: left; margin-left: 430px;"(click)="startEditingHypotheses()">Edit</button>
 
-            <h6>Application and Testing</h6>
-            <p>What if we implement Heijunka in our manufacturing process? This involves:</p>
-            <ul>
-              <li><strong>Piloting Heijunka:</strong> Start with a small area of production to apply Heijunka principles and monitor the outcomes.</li>
-              <li><strong>Measuring Outcomes:</strong> Assess the impact on production efficiency, waste reduction, quality improvement, and flexibility.</li>
-              <li><strong>Adjusting Practices:</strong> Based on feedback and results, make necessary adjustments to improve the implementation of Heijunka.</li>
-            </ul>
+            <!-- Display initial content -->
+                <div *ngIf="!isEditingHypotheses; else editHypotheses">
+                  <div [innerHTML]="HypothesesContent"></div>
+                </div>
+                <!-- Edit mode -->
+                <ng-template #editHypotheses>
+                  <angular-editor [(ngModel)]="HypothesesContent" [config]="editorConfig"></angular-editor>
+                  <button nbButton shape="round" size="tiny" status="dark"(click)="saveHypothesesChanges()">Save</button>
+                  <button nbButton shape="round" size="tiny" status="danger"(click)="cancelHypothesesEditing()">Cancel</button>
+                </ng-template>
+              </div>
 
-            <h6>Hypothetical Scenarios</h6>
-            <p>Consider various scenarios to understand the potential impact of Heijunka:</p>
-            <ul>
-              <li><strong>Increased Demand:</strong> How would Heijunka help manage sudden increases in customer demand?</li>
-              <li><strong>Supply Chain Disruptions:</strong> What if there are disruptions in the supply chain? How can Heijunka maintain production stability?</li>
-              <li><strong>Product Mix Changes:</strong> What if there is a need to frequently change the product mix? How can Heijunka ensure smooth transitions and efficiency?</li>
-            </ul>
-
-            <h6>Exploring Potential Outcomes</h6>
-            <p>By applying Heijunka and analyzing the outcomes, you can:</p>
-            <ul>
-              <li><strong>Identify Best Practices:</strong> Determine the most effective ways to implement Heijunka in different production environments.</li>
-              <li><strong>Drive Continuous Improvement:</strong> Use insights from experimentation to continuously improve production processes and efficiency.</li>
-              <li><strong>Enhance Adaptability:</strong> Develop strategies to quickly adapt to changing market conditions and customer demands.</li>
-            </ul>
-
-          </div>
         </nb-tab>
       </nb-tabset>
     </nb-card>
@@ -180,61 +94,73 @@
     <nb-card size="medium">
       <nb-card-body>
         <nb-stepper orientation="vertical">
+          <!-- Step 1 -->
           <nb-step label="Step 1: Understand Customer Demand">
-            <h6>Understand Customer Demand</h6>
-            <p>
-              The first step in implementing Heijunka is to thoroughly understand customer demand. This involves analyzing
-              historical sales data, forecasting future demand, and identifying any seasonal trends. The goal is to determine
-              the average customer demand over a specific period, which will serve as the basis for leveling production.
-            </p>
-            <button nbButton disabled nbStepperPrevious>Prev</button>
-            <button nbButton nbStepperNext>Next</button>
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep1()" *ngIf="!isEditingStep1">Edit</button>
+            <p *ngIf="!isEditingStep1"[innerHTML]="step1Content"></p>
+            <angular-editor [(ngModel)]="step1Content" [config]="editorConfig" *ngIf="isEditingStep1"></angular-editor>
+            <div *ngIf="isEditingStep1">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep1Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep1Editing()">Cancel</button>
+            </div>
+            <button nbButton disabled nbStepperPrevious *ngIf="!isEditingStep1">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep1">Next</button>
           </nb-step>
+
+          <!-- Step 2 -->
           <nb-step label="Step 2: Calculate Takt Time">
-            <h6>Calculate Takt Time</h6>
-            <p>
-              Takt time is the rate at which products must be produced to meet customer demand. It is calculated by dividing
-              the available production time by the customer demand during that time. Takt time ensures that production is
-              aligned with customer demand, preventing overproduction and underproduction.
-            </p>
-            <button nbButton nbStepperPrevious>Prev</button>
-            <button nbButton nbStepperNext>Next</button>
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep2()" *ngIf="!isEditingStep2">Edit</button>
+            <p *ngIf="!isEditingStep2"[innerHTML]="step2Content"></p>
+            <angular-editor [(ngModel)]="step2Content" [config]="editorConfig" *ngIf="isEditingStep2"></angular-editor>
+            <div *ngIf="isEditingStep2">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep2Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep2Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep2">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep2">Next</button>
           </nb-step>
+
+          <!-- Step 3 -->
           <nb-step label="Step 3: Implement Level Production">
-            <h6>Implement Level Production</h6>
-            <p>
-              Level production involves distributing production evenly over a given period to match the calculated takt time.
-              This step requires adjusting production schedules, batch sizes, and workforce allocation to ensure a consistent
-              production flow that meets the takt time.
-            </p>
-            <button nbButton nbStepperPrevious>Prev</button>
-            <button nbButton nbStepperNext>Next</button>
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep3()" *ngIf="!isEditingStep3">Edit</button>
+            <p *ngIf="!isEditingStep3"[innerHTML]="step3Content"></p>
+            <angular-editor [(ngModel)]="step3Content" [config]="editorConfig" *ngIf="isEditingStep3"></angular-editor>
+            <div *ngIf="isEditingStep3">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep3Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep3Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep3">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep3">Next</button>
           </nb-step>
+
+          <!-- Step 4 -->
           <nb-step label="Step 4: Use Mixed Model Production">
-            <h6>Use Mixed Model Production</h6>
-            <p>
-              Mixed model production is the practice of producing different products in small batches within the same
-              production period. This approach helps to avoid bottlenecks, reduce inventory, and increase flexibility in
-              responding to customer demand. It requires careful planning and coordination to ensure that the production
-              of various products is balanced.
-            </p>
-            <button nbButton nbStepperPrevious>Prev</button>
-            <button nbButton nbStepperNext>Next</button>
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep4()" *ngIf="!isEditingStep4">Edit</button>
+            <p *ngIf="!isEditingStep4"[innerHTML]="step4Content"></p>
+            <angular-editor [(ngModel)]="step4Content" [config]="editorConfig" *ngIf="isEditingStep4"></angular-editor>
+            <div *ngIf="isEditingStep4">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep4Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep4Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep4">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep4">Next</button>
           </nb-step>
+
+          <!-- Step 5 -->
           <nb-step label="Step 5: Monitor and Adjust">
-            <h6>Monitor and Adjust</h6>
-            <p>
-              Once Heijunka is implemented, it is essential to continuously monitor production performance and make
-              adjustments as necessary. This involves tracking key performance indicators (KPIs), identifying areas for
-              improvement, and implementing changes to optimize the production process further.
-            </p>
-            <button nbButton nbStepperPrevious>Prev</button>
-            <button nbButton disabled nbStepperNext>Next</button>
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep5()" *ngIf="!isEditingStep5">Edit</button>
+            <p *ngIf="!isEditingStep5"[innerHTML]="step5Content"></p>
+            <angular-editor [(ngModel)]="step5Content" [config]="editorConfig" *ngIf="isEditingStep5"></angular-editor>
+            <div *ngIf="isEditingStep5">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep5Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep5Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep5">Prev</button>
+            <button nbButton disabled nbStepperNext *ngIf="!isEditingStep5">Next</button>
           </nb-step>
         </nb-stepper>
       </nb-card-body>
-    </nb-card>
-  </div>
+    </nb-card>  </div>
 
 
 
@@ -244,92 +170,36 @@
 
 
       <nb-accordion>
-        <nb-accordion-item #item>
+        <nb-accordion-item>
           <nb-accordion-item-header>
             History
           </nb-accordion-item-header>
           <nb-accordion-item-body>
-            <p><strong>Heijunka</strong> has a rich history rooted in the development of the Toyota Production System. Its principles have been instrumental in shaping modern manufacturing practices, emphasizing the importance of production leveling to achieve efficiency, reduce waste, and respond flexibly to customer demand.</p>
-
-            <h5>Origins and Development at Toyota</h5>
-
-            <h6>Early 20th Century and Sakichi Toyoda:</h6>
-            <div style="text-align:center;">
-              <img src="../../assets/heijunka/Sakichi.jpeg" alt="Sakichi Toyoda" style="width:100%;max-width:400px;">
+              <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 900px;" (click)="startEditingHistory()" *ngIf="!isEditingHistory">Edit</button>
+            <div *ngIf="isEditingHistory">
+              <angular-editor [(ngModel)]="historyContent" [config]="editorConfig"></angular-editor>
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveHistoryChanges()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelHistoryEditing()">Cancel</button>
             </div>
-            <ul>
-              <li>The roots of heijunka can be traced back to Sakichi Toyoda, the founder of Toyota Industries and an inventor who focused on improving efficiency in textile manufacturing.</li>
-              <li>He developed the automatic loom, which incorporated the principle of stopping when a problem occurred, laying the groundwork for the emphasis on quality and efficiency in production processes.</li>
-            </ul>
-
-            <h6>Kiichiro Toyoda and Just-in-Time (JIT):</h6>
-            <div style="text-align:center;">
-            <img src="../../assets/heijunka/kiichiro.jpg" alt="Kiichiro Toyoda" style="width:100%;max-width:400px;">
-           </div>
-            <ul>
-              <li>Sakichi's son, Kiichiro Toyoda, took the principles of efficiency and continuous improvement further when he founded Toyota Motor Corporation.</li>
-              <li>In the 1930s and 1940s, Kiichiro introduced the concept of Just-in-Time production, which emphasized producing only what was needed, when it was needed, and in the amount needed.</li>
-              <li>This approach helped reduce waste and inventory costs.</li>
-            </ul>
-
-            <h6>Post-War Japan and Taiichi Ohno:</h6>
-            <div style="text-align:center;">
-            <img src="../../assets/heijunka/Taiichi.jpg" alt="Taiichi Ohno" style="width:550px;">
-            </div>
-            <ul>
-              <li>After World War II, Japan faced economic difficulties, which forced companies like Toyota to find ways to optimize production with limited resources.</li>
-              <li>Taiichi Ohno, an engineer at Toyota, played a crucial role in developing the Toyota Production System (TPS) during the 1950s and 1960s.</li>
-              <li>He observed that traditional mass production methods, characterized by large batch sizes and high inventory levels, led to inefficiencies and waste.</li>
-            </ul>
-
-            <h6>Market Efficiency of Heijunka:</h6>
-
-              <ul>
-              <li>Taiichi Ohno introduced heijunka as a way to level the production schedule, thereby smoothing out the fluctuations in production that caused inefficiencies.</li>
-              <li>Heijunka involves distributing production evenly over time, which reduces the bullwhip effect—large fluctuations in inventory levels and production rates caused by inconsistent demand.</li>
-            </ul>
-            <h5>Global Influence and Modern Application</h5>
-
-            <h6>Spread of Lean Manufacturing:</h6>
-            <div style="text-align:center;">
-
-            <img src="../../assets/heijunka/Lean-manufacturing.jpg" alt="Lean Manufacturing" style="width:100%;max-width:400px;">
-            </div>
-            <ul>
-              <li>The success of the Toyota Production System and its principles, including heijunka, led to the widespread adoption of lean manufacturing practices worldwide.</li>
-              <li>Companies across various industries began to implement heijunka and other lean tools to improve efficiency and competitiveness.</li>
-            </ul>
-
-            <h6>Continuous Improvement and Evolution:</h6>
-            <ul>
-              <li>Heijunka continues to evolve as companies integrate advanced technologies such as automation, real-time data analytics, and artificial intelligence to further enhance production leveling and responsiveness.</li>
-            </ul>
-
+            <div *ngIf="!isEditingHistory" [innerHTML]="historyContent"></div>
           </nb-accordion-item-body>
-
         </nb-accordion-item>
 
         <nb-accordion-item>
           <nb-accordion-item-header>
             Cycle
           </nb-accordion-item-header>
-          <nb-accordion-item-body>
-            <h5>Level-loading Heijunka Cycle</h5>
-            <p><strong>Heijunka</strong> also known as level-loading, production-leveling or production-smoothing, is a foundational element of the Toyota Production System. It facilitates system stability by addressing workload unevenness (mura) through the leveling of both volume and mix over time, see Figure 1. Heijunka also serves as a pacing mechanism for operations, often reflected in the use of heijunka, leveling, or schedule boxes, which are typically designed using pitch intervals, see separate pitch post. Successful heijunka reduces lead time, inventory, and worker physical and psychological stress that can accompany fluctuating workloads. Some prerequisites include quick changeovers, capable processes, standardized work (or at least defined work content), good visual management, and a solid understanding of customer demand – volume, mix, and variation, see separate demand segmentation graph post.</p>
-            <div style="text-align:center;">
 
-              <img src="../../assets/heijunka/heijunka-graph.png" style="width:100%;">
+          <nb-accordion-item-body>
+            <div>
+              <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 900px;" (click)="startEditingCycle()" *ngIf="!isEditingCycle">Edit</button>
             </div>
-            <p>The <strong>Heijunka</strong> cycle (Ch) represents a regular, repeatable production sequence to facilitate the leveling of mix. The lean practitioner can readily calculate it using a simple spreadsheet and one or more illustration iterations of the proposed cycle, followed by some real PDCA at the gemba. See Figures 2 and 3, as well as the related formulas. As with the concept of takt time, consider Ch more as a design parameter, than a precise and rigid blueprint for developing the heijunka system.</p>
-            <div style="text-align:center;">
-              <img src="../../assets/heijunka/Calculation.png" alt="Example heijunka cycle calculation" style="width:100%;">
+            <div *ngIf="isEditingCycle">
+              <angular-editor [(ngModel)]="cycleContent" [config]="editorConfig"></angular-editor>
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveCycleChanges()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelCycleEditing()">Cancel</button>
             </div>
-            <div style="text-align:center;">
-              <img src="../../assets/heijunka/heijunka-sequence.png" alt="Heijunka cycle illustrated" style="width:100%;height:500px">
-            </div>
-            <div style="text-align:center;">
-              <img src="../../assets/heijunka/heijunka-text1.png" alt="Example heijunka cycle calculation" style="width:100%;">
-            </div>
+            <div *ngIf="!isEditingCycle"[innerHTML]="cycleContent"></div>
           </nb-accordion-item-body>
         </nb-accordion-item>
 

@@ -1,21 +1,21 @@
 package heijunka.entite;
 
-import jakarta.persistence.*;
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
+@Document(collection = "reports")
 public class Report {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idReport;
+    private String idReport;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="report")
-    private Set<ProductionData> ProductionDatas;
+    private Set<String> productionDataIds;
 }

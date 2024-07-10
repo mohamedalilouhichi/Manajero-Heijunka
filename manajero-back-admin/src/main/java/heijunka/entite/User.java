@@ -1,34 +1,27 @@
 package heijunka.entite;
 
-import jakarta.persistence.*;
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 
 import java.util.Set;
 
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
+@Document(collection = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUser;
+    private String idUser;
     private String name;
     private String surname;
     private String username;
     private String email;
     private String password;
     private String confirmPassword;
-
-
-    @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    private Set<ProductionData> ProductionDatas;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    private Set<heijunka.entite.Orders> Orders;
+    private Set<String> productionDataIds;
+    private Set<String> orderIds;
 }
