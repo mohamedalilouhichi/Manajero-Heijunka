@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+  <link rel="stylesheet" href="heijunka.component.scss"> <!-- Link to your CSS file -->
+<body>
+<div class="row">
+  <div class="col-md-12 col-lg-20">
+    <div class="container">
+      <nb-card>
+        <h3 class="title" [ngClass]="{'fade-in': fadeIn}">{{ currentTitle }}</h3>
+        <h6 class="text2">Production Leveling</h6>
+        <button class="btn btn-sm btn-black float-right" (click)="handleButtonClick()">Click To Use</button>
+      </nb-card>
+
+    </div>
+
+
+  </div>
+  <div class="col-md-12 col-lg-6">
+    <nb-card size="medium">
+      <nb-tabset>
+        <nb-tab tabTitle="Purpose">
+          <div class="scrollable-content">
+            <div class="edit-button-container">
+              <button nbButton shape="round" size="tiny" status="dark" class="edit-button" style="margin-left: 430px;"(click)="startEditingPurpose()">Edit</button>
+            </div>
+            <!-- Display initial content -->
+            <div *ngIf="!isEditingPurpose; else editPurpose">
+              <div [innerHTML]="purposeContent"></div>
+            </div>
+            <!-- Edit mode -->
+            <ng-template #editPurpose>
+              <angular-editor [(ngModel)]="purposeContent" [config]="editorConfig"></angular-editor>
+              <div class="edit-actions">
+                <button nbButton shape="round" size="tiny" status="dark" (click)="savePurposeChanges()">Save</button>
+                <button nbButton shape="round" size="tiny" status="danger" (click)="cancelEditing()">Cancel</button>
+              </div>
+            </ng-template>
+          </div>
+        </nb-tab>
+
+
+        <nb-tab tabTitle="Motivation">
+            <div class="scrollable-content">
+              <div class="edit-button-container">
+                <button nbButton shape="round" size="tiny" status="dark" class="edit-button" style="margin-left: 430px;"(click)="startEditingMotivation()">Edit</button>
+              </div>
+              <!-- Display initial content -->
+              <div *ngIf="!isEditingMotivation; else editMotivation">
+                <div [innerHTML]="motivationContent"></div>
+              </div>
+              <!-- Edit mode -->
+              <ng-template #editMotivation>
+                <angular-editor [(ngModel)]="motivationContent" [config]="editorConfig"></angular-editor>
+                <button nbButton shape="round" size="tiny" status="dark"(click)="saveMotivationChanges()">Save</button>
+                <button nbButton shape="round" size="tiny" status="danger"(click)="cancelMotivationEditing()">Cancel</button>
+              </ng-template>
+            </div>
+        </nb-tab>
+        <nb-tab tabTitle="Method">
+          <div class="scrollable-content">
+            <div class="edit-button-container">
+              <button nbButton shape="round" size="tiny" status="dark" class="edit-button" style="margin-left: 430px;"(click)="startEditingMethod()">Edit</button>
+            </div>              <!-- Display initial content -->
+              <div *ngIf="!isEditingMethod; else editMethod">
+                <div [innerHTML]="methodContent"></div>
+              </div>
+              <ng-template #editMethod>
+                <angular-editor [(ngModel)]="methodContent" [config]="editorConfig"></angular-editor>
+                <button nbButton shape="round" size="tiny" status="dark"(click)="saveEditingMethod()">Save</button>
+                <button nbButton shape="round" size="tiny" status="danger"(click)="cancelEditingMethod()">Cancel</button>
+              </ng-template>
+            </div>
+        </nb-tab>
+        <nb-tab tabTitle="Hypotheses">
+          <div class="scrollable-content">
+            <div class="edit-button-container">
+              <button nbButton shape="round" size="tiny" status="dark" class="edit-button" style="margin-left: 430px;"(click)="startEditingHypotheses()">Edit</button>
+            </div>
+            <!-- Display initial content -->
+                <div *ngIf="!isEditingHypotheses; else editHypotheses">
+                  <div [innerHTML]="HypothesesContent"></div>
+                </div>
+                <!-- Edit mode -->
+                <ng-template #editHypotheses>
+                  <angular-editor [(ngModel)]="HypothesesContent" [config]="editorConfig"></angular-editor>
+                  <button nbButton shape="round" size="tiny" status="dark"(click)="saveHypothesesChanges()">Save</button>
+                  <button nbButton shape="round" size="tiny" status="danger"(click)="cancelHypothesesEditing()">Cancel</button>
+                </ng-template>
+              </div>
+
+        </nb-tab>
+      </nb-tabset>
+    </nb-card>
+  </div>
+
+
+
+  <div class="col-md-12 col-lg-6">
+    <nb-card size="medium">
+      <nb-card-body>
+        <nb-stepper orientation="vertical">
+          <!-- Step 1 -->
+          <nb-step label="Step 1: Understand Customer Demand">
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep1()" *ngIf="!isEditingStep1">Edit</button>
+            <p *ngIf="!isEditingStep1"[innerHTML]="step1Content"></p>
+            <angular-editor [(ngModel)]="step1Content" [config]="editorConfig" *ngIf="isEditingStep1"></angular-editor>
+            <div *ngIf="isEditingStep1">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep1Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep1Editing()">Cancel</button>
+            </div>
+            <button nbButton disabled nbStepperPrevious *ngIf="!isEditingStep1">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep1">Next</button>
+          </nb-step>
+
+          <!-- Step 2 -->
+          <nb-step label="Step 2: Calculate Takt Time">
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep2()" *ngIf="!isEditingStep2">Edit</button>
+            <p *ngIf="!isEditingStep2"[innerHTML]="step2Content"></p>
+            <angular-editor [(ngModel)]="step2Content" [config]="editorConfig" *ngIf="isEditingStep2"></angular-editor>
+            <div *ngIf="isEditingStep2">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep2Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep2Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep2">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep2">Next</button>
+          </nb-step>
+
+          <!-- Step 3 -->
+          <nb-step label="Step 3: Implement Level Production">
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep3()" *ngIf="!isEditingStep3">Edit</button>
+            <p *ngIf="!isEditingStep3"[innerHTML]="step3Content"></p>
+            <angular-editor [(ngModel)]="step3Content" [config]="editorConfig" *ngIf="isEditingStep3"></angular-editor>
+            <div *ngIf="isEditingStep3">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep3Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep3Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep3">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep3">Next</button>
+          </nb-step>
+
+          <!-- Step 4 -->
+          <nb-step label="Step 4: Use Mixed Model Production">
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep4()" *ngIf="!isEditingStep4">Edit</button>
+            <p *ngIf="!isEditingStep4"[innerHTML]="step4Content"></p>
+            <angular-editor [(ngModel)]="step4Content" [config]="editorConfig" *ngIf="isEditingStep4"></angular-editor>
+            <div *ngIf="isEditingStep4">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep4Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep4Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep4">Prev</button>
+            <button nbButton nbStepperNext *ngIf="!isEditingStep4">Next</button>
+          </nb-step>
+
+          <!-- Step 5 -->
+          <nb-step label="Step 5: Monitor and Adjust">
+            <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 200px;margin-top: 35px;" (click)="startEditingStep5()" *ngIf="!isEditingStep5">Edit</button>
+            <p *ngIf="!isEditingStep5"[innerHTML]="step5Content"></p>
+            <angular-editor [(ngModel)]="step5Content" [config]="editorConfig" *ngIf="isEditingStep5"></angular-editor>
+            <div *ngIf="isEditingStep5">
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveStep5Changes()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelStep5Editing()">Cancel</button>
+            </div>
+            <button nbButton nbStepperPrevious *ngIf="!isEditingStep5">Prev</button>
+            <button nbButton disabled nbStepperNext *ngIf="!isEditingStep5">Next</button>
+          </nb-step>
+        </nb-stepper>
+      </nb-card-body>
+    </nb-card>  </div>
+
+
+
+
+  <div class="accordions-container row">
+    <div class="accordion-container col-md-12 col-lg-11 col-xxxl-6">
+
+
+      <nb-accordion>
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            History
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+              <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 900px;" (click)="startEditingHistory()" *ngIf="!isEditingHistory">Edit</button>
+            <div *ngIf="isEditingHistory">
+              <angular-editor [(ngModel)]="historyContent" [config]="editorConfig"></angular-editor>
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveHistoryChanges()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelHistoryEditing()">Cancel</button>
+            </div>
+            <div *ngIf="!isEditingHistory" [innerHTML]="historyContent"></div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Cycle
+          </nb-accordion-item-header>
+
+          <nb-accordion-item-body>
+            <div>
+              <button nbButton shape="round" size="tiny" status="dark" style="float: left; margin-left: 900px;" (click)="startEditingCycle()" *ngIf="!isEditingCycle">Edit</button>
+            </div>
+            <div *ngIf="isEditingCycle">
+              <angular-editor [(ngModel)]="cycleContent" [config]="editorConfig"></angular-editor>
+              <button nbButton shape="round" size="tiny" status="dark" (click)="saveCycleChanges()">Save</button>
+              <button nbButton shape="round" size="tiny" status="danger" (click)="cancelCycleEditing()">Cancel</button>
+            </div>
+            <div *ngIf="!isEditingCycle"[innerHTML]="cycleContent"></div>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+      </nb-accordion>
+    </div>
+
+  </div>
+
+
+
+
+
+
+</div>
+</body>
