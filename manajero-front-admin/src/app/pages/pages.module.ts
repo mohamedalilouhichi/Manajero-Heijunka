@@ -15,10 +15,10 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import {HeijunkaComponent} from '../heijunka/heijunka.component';
+import {MethodComponent} from '../method/method.component';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import {FormsModule} from '@angular/forms';
-import {MethodComponent} from '../method/method.component';
 
 @NgModule({
   imports: [
@@ -30,8 +30,8 @@ import {MethodComponent} from '../method/method.component';
     DashboardModule,
     ECommerceModule,
     MiscellaneousModule,
-    NbCardModule,       // Add NbCardModule
-    NbStepperModule,    // Add NbStepperModule
+    NbCardModule,
+    NbStepperModule,
     NbButtonModule,
     NbTabsetModule,
     NbAccordionModule,
