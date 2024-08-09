@@ -1,0 +1,216 @@
+<body>
+<div class="col-13">
+  <nb-card size="large">
+    <nb-tabset  fullWidth>
+      <nb-tab tabTitle="Add Products">
+        <ngx-product-list></ngx-product-list>
+      </nb-tab>
+      <nb-tab tabTitle="Leveling Algorithm">
+        <nb-card class="col-md-12 col-lg-12 col-xxxl-12">
+  <nb-card-body >
+    <nb-stepper #stepper orientation="horizontal">
+      <nb-step label="First step">
+        <ng-template #labelOne>First step</ng-template>
+        <nb-card>
+          <nb-card-body>
+            <div class="table-container">
+              <ng2-smart-table style="max-height: 520px; overflow-y: hidden;"[settings]="settings" [source]="source" (userRowSelect)="onRowSelect($event)"></ng2-smart-table>
+            </div>
+            <p *ngIf="selectionMessage" style="color: red;">{{ selectionMessage }}</p>
+            <button nbButton (click)="onFirstSubmit()">Next</button>
+          </nb-card-body>
+        </nb-card>
+      </nb-step>
+      <nb-step label="Second step">
+        <ng-template #labelTwo>Second step</ng-template>
+        <div class="col-lg-12">
+          <nb-card>
+            <nb-card-header>Available Time</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-md-6">
+                  <p><i class="fas fa-calendar-alt"></i> Work Days Number:</p>
+                  <nb-select [ngModel]="workDaysNumber" (ngModelChange)="workDaysNumber = $event" style="width: 100%;">
+                    <nb-option *ngFor="let day of workDays" [value]="day">{{ day }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-md-6" >
+                  <p><i class="fas fa-clock"></i> Work Hours Per Day:</p>
+                  <nb-select [ngModel]="workHoursPerDay" (ngModelChange)="workHoursPerDay = $event" style="width: 100%;">
+                    <nb-option *ngFor="let hour of workHours" [value]="hour">{{ hour }}</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+
+            </nb-card-body>
+            <p *ngIf="availableTime !== null" [ngStyle]="{ 'font-weight': 'bold', 'color': 'green', 'font-size': '16px','margin-left':'16px' }">
+              Available Time: {{ availableTime }} hours
+            </p>
+            <button class="btn btn-sm btn-black float-right" (click)="calculateAvailableTime()">Calculate</button>
+            <!-- Display the message here if it exists -->
+            <p *ngIf="selectionMessage" style="color: red;">{{ selectionMessage }}</p>
+            <button nbButton (click)="onSecondSubmit()">Next</button>
+          </nb-card>
+        </div>
+      </nb-step>      <nb-step [stepControl]="thirdForm" label="Third step">
+        <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()">
+          <h5>Selected Products</h5>
+          <nb-select class="selected-product"
+                     placeholder="Select a product"
+                     formControlName="selectedProduct"
+                     (selectedChange)="onProductChange()"
+                     fullWidth
+          >
+            <nb-option *ngFor="let product of selectedRows" [value]="product">
+              {{ product.productName }}
+            </nb-option>
+          </nb-select>
+
+          <button *ngIf="selectedProduct" _ngcontent-wtv-c238="" nbbutton="" matripple=""style="margin-left:20px;margin-top:-10px" class="mat-ripple appearance-filled size-tiny shape-rectangle status-basic ng-star-inserted nb-transition"
+                  aria-disabled="false" tabindex="0"type="button" (click)="formAdd()">Add Order</button>
+
+          <div formArrayName="orders">
+            <div
+              *ngFor="let order of getOrdersForSelectedProduct().controls; let i = index"
+              [formGroupName]="i"
+              class="order-row"
+            >
+
+              <div class="order-inputs">
+                <input
+                  type="text"
+                  nbInput
+                  fullWidth fieldSize="small"
+                  placeholder="Order Name"
+                  formControlName="orderName"
+                />
+                <input
+                  type="number"
+                  nbInput
+                  fullWidth fieldSize="small"
+                  placeholder="Quantity"
+                  formControlName="quantity"
+                />
+              </div>
+              <button _ngcontent-wtv-c238="" nbbutton="" matripple="" class="mat-ripple appearance-filled size-tiny shape-semi-round status-danger ng-star-inserted nb-transition" aria-disabled="false" tabindex="0" type="button" (click)="removeOrder(i)">Remove</button>
+
+            </div>
+          </div>
+          <div *ngIf="selectedProduct" style="display: flex; align-items: center;width:93%">
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              fieldSize="small"
+              placeholder="Total Orders"
+              formControlName="quantity"
+              readonly
+              style="margin-right: 10px"
+            />
+            <input
+              nbInput
+              fullWidth
+              fieldSize="small"
+              type="number"
+              formControlName="totalQuantity"
+              readonly
+            />
+          </div>
+          <div class="button-container">
+            <button class="btn btn-sm btn-black" (click)="calculateTaktTime()">
+              Calculate Takt Time for {{ selectedProduct?.productName }}
+            </button>
+            <button *ngIf="selectedProduct" nbbutton matripple class="mat-ripple appearance-outline size-tiny shape-semi-round status-success" style="margin-top: 30px;" type="button" (click)="addOrders()">
+              Save Order(s)
+            </button>
+          </div>
+
+          <p *ngIf="showTaktTime && availableTime !== null && selectedProduct">
+            Takt Time for {{ selectedProduct?.productName }}:
+            {{ thirdForm.get('takttime')?.value | number: '1.2-2' }} hours
+          </p>
+
+
+        </form>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton nbStepperNext>next</button>
+        <div *ngIf="ordersAddedSuccessfully" class="alert alert-success">
+          Orders added successfully!
+        </div>
+      </nb-step>
+      <nb-step [stepControl]="fourthForm" label="Fourth step">
+        <form [formGroup]="fourthForm" (ngSubmit)="onFourthSubmit()">
+          <h5>Almost There !</h5>
+          <div style="display: flex;width:80%;margin-left:30px">
+            <div style="flex: 1;">
+
+              <p><i class="fas fa-tag"></i> Name your Box :</p>
+
+              <input type="text" nbInput fullWidth placeholder="title" formControlName="title">
+
+            </div>
+            <div style="flex: 2; margin-left: 200px;">
+
+              <p><i class="fas fa-sticky-note"></i> Additional Notes :</p>
+              <textarea rows="2" nbInput fullWidth shape="round" placeholder="Text Area" formControlName="notes"></textarea>
+
+            </div>
+          </div>
+
+          <!-- Notes Input -->
+
+          <!-- Product Information Table -->
+          <!-- Product Information Table -->
+          <div class="table-container"style="height: 200px !important; overflow: auto!important;">
+            <ng2-smart-table [settings]="secondSettings" [source]="secondSource" >
+            </ng2-smart-table>
+          </div>
+          <!-- Submit Button -->
+          <button class="btn btn-sm btn-black float-right"(click)="generateSchedule()" type="submit">
+            >> Generate Your Heijunka Box
+          </button>
+        </form>
+        <button nbButton nbStepperPrevious>Prev</button>
+        <button nbButton nbStepperNext>Next</button>
+      </nb-step>
+
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+<!--this is verification table for the Heijunka Box genrateur you find it on step 3 -->
+<!--<table>-->
+<!--  <thead>-->
+<!--  <tr>-->
+<!--    <th>Day</th>-->
+<!--    <th>Product</th>-->
+<!--    <th>Production Quantity</th>-->
+<!--    <th>Time Slot</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--  <tr *ngFor="let entry of schedule">-->
+<!--    <td>{{ entry.Day }}</td>-->
+<!--    <td>{{ entry.Product }}</td>-->
+<!--    <td>{{ entry.ProductionQuantity }}</td>-->
+<!--    <td>{{ entry.TimeSlot }}</td>-->
+<!--  </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
+      </nb-tab>
+      <nb-tab tabTitle="Production Planning" id="production-planning">
+        <button class="btn btn-sm btn-black"style="width: 200px;"(click)="toggleComponent()">
+          <span *ngIf="showHeijunka">Show All Cards</span>
+          <span *ngIf="showCards">Show Latest Box</span>
+        </button>
+        <div *ngIf="showHeijunka">
+          <ngx-latestheijunkabox></ngx-latestheijunkabox>
+        </div>
+        <div *ngIf="showCards">
+          <ngx-cards></ngx-cards>
+        </div>
+      </nb-tab>
+
+    </nb-tabset>
+  </nb-card>
+</div>
+</body>

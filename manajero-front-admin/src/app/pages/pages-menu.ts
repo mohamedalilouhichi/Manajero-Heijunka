@@ -85,7 +85,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Heijunka (Production Leveling)',
-        link: '/pages/lean/heijunka',
+        icon: 'layers-outline',
+        children: [
+          {
+            title: 'Method',
+            icon: 'options-outline',
+
+            link: '/pages/lean/heijunka',
+          },
+          {
+            title: 'Dashboard',
+            icon: 'pie-chart-outline',
+            link: '/pages/lean/heijunka/dashboard',
+          },
+        ],
       },
       {
         title: 'Andon (Visual Management)',

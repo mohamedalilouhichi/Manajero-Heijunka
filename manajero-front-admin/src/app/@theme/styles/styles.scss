@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
-@import '~font-awesome/css/font-awesome.css';
+//@import "@syncfusion/ej2-base/styles/material.css";
+//@import "@syncfusion/ej2-buttons/styles/material.css";
+//@import "@syncfusion/ej2-inputs/styles/material.css";
+//@import "@syncfusion/ej2-popups/styles/material.css";
+//@import "@syncfusion/ej2-dropdowns/styles/material.css";
+//@import "@syncfusion/ej2-navigations/styles/material.css";
+//@import "@syncfusion/ej2-lists/styles/material.css";
+//@import "@syncfusion/ej2-calendars/styles/material.css";
+//@import "@syncfusion/ej2-angular-schedule/styles/material.css";
+
+
 // themes - our custom or/and out of the box themes
 @import 'themes';
 
@@ -17,7 +27,6 @@
 
 @import './layout';
 @import './overrides';
-
 // install the framework and custom global styles
 @include nb-install() {
 

@@ -1,10 +1,10 @@
 package heijunka.entite;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -13,11 +13,16 @@ import java.util.Set;
 @Document(collection = "orders")
 public class Orders {
     @Id
+    @JsonProperty("orderId")
     private String idOrder;
 
-    private String userId;
+    @JsonProperty("orderName")
+    private String orderName;
 
-    private String productionPlanId;
+    @JsonProperty("quantity")
+    private int quantity;
 
-    private Set<String> productionAnomalyIds;
+    @JsonProperty("product")
+    @DBRef
+    private Product product;
 }

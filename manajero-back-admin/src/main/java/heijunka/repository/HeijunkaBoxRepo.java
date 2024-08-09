@@ -1,10 +1,10 @@
 package heijunka.repository;
 
-
 import heijunka.entite.HeijunkaBox;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.domain.Sort;
+import java.util.List;
 
-@Repository
-public interface HeijunkaBoxRepo extends MongoRepository<HeijunkaBox, Long> {
+public interface HeijunkaBoxRepo extends MongoRepository<HeijunkaBox, String> {
+    List<HeijunkaBox> findAll(Sort sort);
 }

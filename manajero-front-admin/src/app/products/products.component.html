@@ -1,0 +1,28 @@
+<nb-card>
+  <nb-card-header class="card-title">Product information</nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="productName">Product name</label>
+        <input id="productName" type="text" nbInput formControlName="productName" placeholder="Product name" class="input-full-width size-medium status-basic shape-rectangle nb-transition">
+      </div>
+      <div class="form-group">
+        <label for="productCode">Product code</label>
+        <input id="productCode" type="text" nbInput formControlName="productCode" placeholder="Product code" class="input-full-width size-medium status-basic shape-rectangle nb-transition">
+      </div>
+      <div class="form-group">
+        <label for="productCategory">Category</label>
+        <input id="productCategory" type="text" nbInput formControlName="productCategory" placeholder="Category" class="input-full-width size-medium status-basic shape-rectangle nb-transition">
+      </div>
+      <div class="form-group">
+        <label for="productDate">Production date</label>
+        <input id="productDate" type="date" nbInput formControlName="productDate" placeholder="Production date" class="input-full-width size-medium status-basic shape-rectangle nb-transition">
+      </div>
+
+      <div class="button-group">
+        <button nbButton hero status="primary" type="submit"> Add product </button>
+        <button nbButton outline status="danger" type="button" (click)="close()"> Cancel </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

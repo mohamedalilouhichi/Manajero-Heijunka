@@ -6,7 +6,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import {HeijunkaComponent} from '../heijunka/heijunka.component';
-import {MethodComponent} from '../method/method.component';
+import {AlgorithmComponent} from '../algorithm/algorithm.component';
+import {HeijunkaboxComponent} from '../heijunkabox/heijunkabox.component';
 
 const routes: Routes = [{
   path: '',
@@ -75,8 +76,12 @@ const routes: Routes = [{
       component: HeijunkaComponent,
     },
     {
+      path: 'lean/heijunka/heijunka-box/:idBox',
+      component: HeijunkaboxComponent,
+    },
+    {
       path: 'lean/heijunka/method',
-      component: MethodComponent,
+      component: AlgorithmComponent,
     },
     {
       path: '',

@@ -20,8 +20,8 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { HeijunkaComponent } from './heijunka/heijunka.component';
-import { MethodComponent } from './method/method.component';
+import {DecimalPipe} from '@angular/common';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +42,10 @@ import { MethodComponent } from './method/method.component';
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
   ],
+  providers: [DecimalPipe],
+
   bootstrap: [AppComponent],
-})
+  exports: [
+  ]})
 export class AppModule {
 }

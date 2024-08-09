@@ -1,0 +1,62 @@
+.wide-button {
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td a {
+  margin-right: 10px;
+}
+
+.nb-edit:before {
+  content: '\270E'; /* Unicode for pencil icon */
+  color: green;
+}
+
+.nb-trash:before {
+  content: '\1F5D1'; /* Unicode for trash can icon */
+  color: red;
+}
+.table-container {
+  max-height: 400px; /* Adjust height as needed */
+  overflow-y: auto;
+}
+.btn-black {
+  color: #f8f9fa; /* Initial black color */
+  background-color: #343739; /* Transparent background */
+  border-color: #343739; /* Initial black border color */
+}
+
+.btn-black:hover {
+  color: #8d8d8d; /* White color on hover */
+  background-color: transparent; /* Transparent background */
+  border-color: #4b4f50; /* Black border color on hover */
+}
+/* CSS */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure the container has a height */
+  /* Optional: Adjust height or padding as needed */
+}

@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+*{
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Roboto Slab', serif;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+body {
+  background-color: #D2DBDD;
+  display: flex;
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.wrapper {
+  height: 65vh; /* Set the height to 100vh */
+  overflow-y: auto; /* Add this line */
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden; /* Add this line */
+}
+
+.card--1 .card__img, .card--1 .card__img--hover {
+  background-image: url('https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
+}
+
+.card--2 .card__img, .card--2 .card__img--hover {
+  background-image: url('https://images.pexels.com/photos/307008/pexels-photo-307008.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
+}
+
+.card__like {
+  width: 18px;
+}
+
+.card__clock {
+  width: 15px;
+  vertical-align: middle;
+  fill: #AD7D52;
+}
+.card__time {
+  font-size: 12px;
+  color: #AD7D52;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.card__clock-info {
+  float: right;
+}
+
+
+
+.card__info-hover {
+  position: absolute;
+  padding: 16px;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+}
+
+
+.card {
+  margin: 10px; /* Reduce margin to 10px */
+  flex-basis: calc(33.33% - 20px); /* Reduce flex-basis to make cards narrower */
+  transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
+  background-color: #fff;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0,0.1);
+}
+
+.card__img {
+  height: 150px; /* Reduce image height to 150px */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card__img--hover {
+  height: 150px; /* Reduce image height to 150px */
+  transition: 0.2s all ease-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card__info {
+  padding: 10px 16px; /* Reduce padding to 10px 16px */
+}
+
+.card__category {
+  font-size: 11px; /* Reduce font size to 11px */
+  letter-spacing: 1.5px;
+}
+
+.card__title {
+  font-size: 12px; /* Reduce font size to 16px */
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.card__by {
+  font-size: 12px; /* Reduce font size to 11px */
+}
+
+.card__author {
+  font-size: 11px; /* Reduce font size to 11px */
+}
+
+.card:hover {
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
+  transform: scale(1.10, 1.10);
+}
+
+
+
+
+
+
+
+
+
+
+.card:hover .card__img--hover {
+  height: 100%;
+  opacity: 0.3;
+}
+
+.card:hover .card__info {
+  background-color: transparent;
+  position: relative;
+}
+
+.card:hover .card__info-hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-basis: calc(50% - 40px);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex-basis: 100%;
+  }
+}
+/* CSS */
+.card {
+  position: relative;
+  /* other styles */
+}
+
+.card__delete {
+  position: absolute;
+  top: 270px; /* Adjust as needed */
+  right: 16px; /* Adjust as needed */
+  background: none;
+  border: none;
+  color: #38363d; /* Adjust color as needed */
+  cursor: pointer;
+  font-size: 1.2em; /* Adjust size as needed */
+}
+
+.card__delete i {
+  pointer-events: none; /* Prevent clicks on the icon from propagating */
+}

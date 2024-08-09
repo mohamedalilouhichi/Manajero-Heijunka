@@ -1,0 +1,76 @@
+ng2-smart-table {
+  font-size: 14px; /* adjust font size to fit mobile screen */
+}
+
+@media (max-width: 768px) {
+  ng2-smart-table {
+    font-size: 12px;
+    zoom: 0.8;/* smaller font size for mobile */
+  }
+  ng2-smart-table table {
+    width: 100%; /* make table width adapt to screen size */
+  }
+  ng2-smart-table th, ng2-smart-table td {
+    padding: 5px; /* reduce padding to fit mobile screen */
+  }
+}
+.table-container {
+  height: 300px; /* Adjust this height as needed */
+  overflow: auto;
+}
+.btn-black {
+  color: #f8f9fa; /* Initial black color */
+  background-color: #343739; /* Transparent background */
+  border-color: #343739; /* Initial black border color */
+}
+
+.btn-black:hover {
+  color: #8d8d8d; /* White color on hover */
+  background-color: transparent; /* Transparent background */
+  border-color: #4b4f50; /* Black border color on hover */
+}
+.info-container {
+  margin-top: 1em;
+}
+
+.info-item {
+  margin-bottom: 0.5em;
+}
+
+.info-item strong {
+  display: block;
+}
+.order-row {
+  display: flex;
+  align-items: center;
+}
+
+.order-inputs {
+  display: flex;
+  flex-grow: 1;
+}
+
+.order-inputs input {
+  margin-right: 10px;
+}
+.selected-product {
+  width: 20%;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-container .btn {
+  margin: 0;
+}
+
+.button-container .btn-black {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px
+}
+
+

@@ -1,0 +1,45 @@
+<div class="heijunka-box-details">
+  <button class="btn btn-sm btn-black" style="width: 100px;" (click)="goBack()">
+    ↩ Back
+  </button>
+  <h2 class="title">{{ heijunkaBox.title }}</h2>
+  <div class="heijunka-box-info">
+    <div *ngIf="!isEditing">
+      <p class="info-item">
+        <label class="info-label">Created on:</label>
+        <span class="info-value">{{ heijunkaBox.timestamp | date: 'E dd-MM-YYYY' }}</span>
+      </p>
+      <p class="info-item">
+        <label class="info-label">Description:</label>
+        <span class="info-value">{{ heijunkaBox.notes }}</span>
+      </p>
+      <!-- HTML -->
+      <div class="button-container">
+        <button nbButton class="btn btn-primary" (click)="edit()">Edit</button>
+      </div>
+    </div>
+
+    <!-- Edit mode -->
+    <form *ngIf="isEditing" [formGroup]="heijunkaBoxForm" (ngSubmit)="onSave()">
+      <p class="info-item">
+        <label for="timestamp" class="info-label">Created on:</label>
+        <input id="timestamp" type="date" formControlName="timestamp" class="info-input">
+      </p>
+      <p class="info-item">
+        <label for="notes" class="info-label">Description:</label>
+        <textarea id="notes" formControlName="notes" class="info-textarea"></textarea>
+      </p>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<ejs-schedule
+  [height]="scheduleHeight"
+  [startHour]="startHour"
+  [endHour]="endHour"
+  [eventSettings]="eventSettings"
+  [selectedDate]="startOfWeek"
+  [readonly]="true">
+</ejs-schedule>

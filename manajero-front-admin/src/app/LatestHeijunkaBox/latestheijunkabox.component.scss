@@ -1,0 +1,11 @@
+::ng-deep .e-appointment.product-product-a {
+  background-color: #ff9999; /* Example color for Product A */
+  border-color: #ff6666;
+}
+
+::ng-deep .e-appointment.product-product-b {
+  background-color: #99ccff; /* Example color for Product B */
+  border-color: #6699ff;
+}
+
+/* Add more classes for other products */
