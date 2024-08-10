@@ -19,7 +19,7 @@ public class HeijunkaBoxControl {
 
     @GetMapping
     public ResponseEntity<List<HeijunkaBox>> getAllHeijunkaBoxes() {
-        List<HeijunkaBox> boxes = service.getAllHeijunkaBoxes();
+        List<HeijunkaBox> boxes = service.getAllNonArchivedHeijunkaBoxes();
         return new ResponseEntity<>(boxes, HttpStatus.OK);
     }
 @GetMapping("/latest")
@@ -57,5 +57,22 @@ public class HeijunkaBoxControl {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+    @PatchMapping("/{id}/archive")
+    public ResponseEntity<Void> archiveHeijunkaBox(@PathVariable String id) {
+        service.archiveHeijunkaBox(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/restore")
+    public ResponseEntity<Void> restoreHeijunkaBox(@PathVariable String id) {
+        service.restoreHeijunkaBox(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/archived")
+    public ResponseEntity<List<HeijunkaBox>> getArchivedHeijunkaBoxes() {
+        List<HeijunkaBox> archivedBoxes = service.getArchivedHeijunkaBoxes();
+        return new ResponseEntity<>(archivedBoxes, HttpStatus.OK);
     }
 }

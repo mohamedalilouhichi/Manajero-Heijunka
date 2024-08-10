@@ -33,7 +33,8 @@ public class HeijunkaBox {
     @JsonProperty("image")
     private String image;
 
-
+    @JsonProperty("archived")
+    private boolean archived;
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -51,4 +52,5 @@ public class HeijunkaBox {
         @JsonProperty("TimeSlot")
         private String timeSlot;
     }
+
 }

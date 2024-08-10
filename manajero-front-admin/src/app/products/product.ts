@@ -1,5 +1,5 @@
-import {ProductionPlan} from "../planning/productionplan";
-import {Orders} from "../algorithm/Orders";
+import {ProductionPlan} from '../planning/productionplan';
+import {Orders} from '../algorithm/Orders';
 
 
 export interface Product {

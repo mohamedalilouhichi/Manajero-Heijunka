@@ -1,6 +1,6 @@
 <body>
 <div class="col-13">
-  <nb-card size="large">
+  <nb-card>
     <nb-tabset  fullWidth>
       <nb-tab tabTitle="Add Products">
         <ngx-product-list></ngx-product-list>
@@ -68,7 +68,10 @@
 
           <button *ngIf="selectedProduct" _ngcontent-wtv-c238="" nbbutton="" matripple=""style="margin-left:20px;margin-top:-10px" class="mat-ripple appearance-filled size-tiny shape-rectangle status-basic ng-star-inserted nb-transition"
                   aria-disabled="false" tabindex="0"type="button" (click)="formAdd()">Add Order</button>
-
+            <p *ngIf="showTaktTime && availableTime !== null && selectedProduct" style="margin-left: 650px;">
+              Takt Time for {{ selectedProduct?.productName }}:
+              {{ selectedProduct.takttime | number: '1.2-2' }} hours
+            </p>
           <div formArrayName="orders">
             <div
               *ngFor="let order of getOrdersForSelectedProduct().controls; let i = index"
@@ -125,10 +128,7 @@
             </button>
           </div>
 
-          <p *ngIf="showTaktTime && availableTime !== null && selectedProduct">
-            Takt Time for {{ selectedProduct?.productName }}:
-            {{ thirdForm.get('takttime')?.value | number: '1.2-2' }} hours
-          </p>
+
 
 
         </form>

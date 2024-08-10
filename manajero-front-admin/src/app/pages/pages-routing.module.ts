@@ -8,6 +8,7 @@ import { NotFoundComponent } from './miscellaneous/not-found/not-found.component
 import {HeijunkaComponent} from '../heijunka/heijunka.component';
 import {AlgorithmComponent} from '../algorithm/algorithm.component';
 import {HeijunkaboxComponent} from '../heijunkabox/heijunkabox.component';
+import {ArchiveComponent} from '../archive/archive.component';
 
 const routes: Routes = [{
   path: '',
@@ -82,6 +83,10 @@ const routes: Routes = [{
     {
       path: 'lean/heijunka/method',
       component: AlgorithmComponent,
+    },
+    {
+      path: 'lean/heijunka/archive',
+      component: ArchiveComponent,
     },
     {
       path: '',

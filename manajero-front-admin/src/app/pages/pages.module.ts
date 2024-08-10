@@ -27,6 +27,7 @@ import {ProductListComponent} from '../product-list/product-list.component';
 import {LatestheijunkaboxComponent} from '../LatestHeijunkaBox/latestheijunkabox.component';
 import {CardsComponent} from '../cards/cards.component';
 import {HeijunkaboxComponent} from '../heijunkabox/heijunkabox.component';
+import {ArchiveComponent} from '../archive/archive.component';
 
 @NgModule({
     imports: [
@@ -62,6 +63,7 @@ import {HeijunkaboxComponent} from '../heijunkabox/heijunkabox.component';
     LatestheijunkaboxComponent,
     CardsComponent,
     HeijunkaboxComponent,
+    ArchiveComponent,
   ],
 })
 export class PagesModule {

@@ -25,5 +25,8 @@ export class ProductService {
     return this.http.patch<Product>(`${this.apiUrl}/${payload.idProduct}/daily-production-goal`,
       { DailyProductionGoal: payload.DailyProductionGoal });
   }
+  updateProduct(id: string, product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+  }
 
 }

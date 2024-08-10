@@ -52,4 +52,33 @@ public class HeijunkaBoxService implements IHeijunkaBoxService {
             throw new RuntimeException("No HeijunkaBox found");
         }
     }
+    public void archiveHeijunkaBox(String id) {
+        Optional<HeijunkaBox> optionalHeijunkaBox = repository.findById(id);
+        if (optionalHeijunkaBox.isPresent()) {
+            HeijunkaBox heijunkaBox = optionalHeijunkaBox.get();
+            heijunkaBox.setArchived(true);
+            repository.save(heijunkaBox);
+        } else {
+            // Handle the case where the HeijunkaBox is not found
+            throw new RuntimeException("HeijunkaBox not found");
+        }
+    }
+
+    public void restoreHeijunkaBox(String id) {
+        Optional<HeijunkaBox> optionalHeijunkaBox = repository.findById(id);
+        if (optionalHeijunkaBox.isPresent()) {
+            HeijunkaBox heijunkaBox = optionalHeijunkaBox.get();
+            heijunkaBox.setArchived(false);
+            repository.save(heijunkaBox);
+        } else {
+            // Handle the case where the HeijunkaBox is not found
+            throw new RuntimeException("HeijunkaBox not found");
+        }
+    }
+    public List<HeijunkaBox> getArchivedHeijunkaBoxes() {
+        return repository.findByArchived(true);
+    }
+    public List<HeijunkaBox> getAllNonArchivedHeijunkaBoxes() {
+        return repository.findByArchived(false);
+    }
 }

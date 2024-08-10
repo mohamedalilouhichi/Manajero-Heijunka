@@ -138,7 +138,6 @@ body {
 .card__author {
   font-size: 13px; /* Reduce font size to 11px */
   font-family: 'Roboto', sans-serif;
-
 }
 
 .card:hover {
@@ -186,7 +185,7 @@ body {
   /* other styles */
 }
 
-.card__delete {
+.card__restore {
   position: absolute;
   top: 270px; /* Adjust as needed */
   right: 16px; /* Adjust as needed */
@@ -197,6 +196,6 @@ body {
   font-size: 1.2em; /* Adjust size as needed */
 }
 
-.card__delete i {
+.card__restore i {
   pointer-events: none; /* Prevent clicks on the icon from propagating */
 }

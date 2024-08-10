@@ -10,6 +10,7 @@ export interface HeijunkaBox {
   timestamp: Date;
   notes?: string;
   image?: string;
+  archived?: boolean;
   schedule: {
     Day: string;
     Product: string;

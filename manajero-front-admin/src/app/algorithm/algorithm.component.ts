@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocalDataSource } from 'ng2-smart-table';
 import {NbStepperComponent, NbTabComponent, NbTabsetComponent} from '@nebular/theme';
@@ -158,7 +158,7 @@ export class AlgorithmComponent implements OnInit {
       productName: product.productName,
       weeklyDemand: product.weeklyDemand,
       takttime: product.takttime,
-      DailyProductionGoal: this.dailyProductionGoals[index]
+      DailyProductionGoal: this.dailyProductionGoals[index],
     }));
     this.secondSource.load(mappedData);
   }
@@ -184,7 +184,7 @@ export class AlgorithmComponent implements OnInit {
           productName: product.productName,
           weeklyDemand: product.weeklyDemand,
           takttime: product.takttime,
-          DailyProductionGoal: this.dailyProductionGoals[index]
+          DailyProductionGoal: this.dailyProductionGoals[index],
         }));
         console.log('Mapped data:', mappedData);
         this.secondSource.load(mappedData);
@@ -267,7 +267,7 @@ this.title = this.fourthForm.get('title').value;
       },
       error => {
         console.error('Error creating production plan', error);
-      }
+      },
     );
   }
 
@@ -335,7 +335,7 @@ this.calculateTaktTime();
               },
               (error) => {
                 console.error('Error saving orders', error);
-              }
+              },
             );
           } else {
             console.log('No new orders to save.');
@@ -343,7 +343,7 @@ this.calculateTaktTime();
         },
         (error) => {
           console.error('Error fetching existing orders', error);
-        }
+        },
       );
     } else {
       console.error('No product selected.');
@@ -356,25 +356,27 @@ this.calculateTaktTime();
         this.products = products;
         this.source.load(this.products);
         this.calculateTotalDemand();
-
         this.calculateDailyProductionGoal();
 
         // Create a new array of objects with updated attributes
-        const updatedProducts = this.products.map((product) => {
+        const productsWithTaktTime = this.products.map((product) => {
           console.log('product:', product);
           console.log('product.totalquantity:', product.totalquantity);
           console.log('availableTime:', this.availableTime);
 
-          const takttime = product.totalquantity > 0 && this.availableTime > 0 ?
-            this.availableTime / product.totalquantity : null;
+          const takttime = product.totalquantity > 0 && this.availableTime > 0
+            ? this.availableTime / product.totalquantity
+            : null;
           console.log('takttime:', takttime);
           this.thirdForm.get('takttime')?.setValue(takttime);
           this.showTaktTime = true;
+
           return {
             productName: product.productName,
             weeklyDemand: product.weeklyDemand,
             takttime: takttime,
-            DailyProductionGoal: this.dailyProductionGoals.find((goal, index) => index === this.products.indexOf(product)),
+            DailyProductionGoal: this.dailyProductionGoals.find((goal, index) =>
+              index === this.products.indexOf(product)),
             productCode: product.productCode,
             productCategory: product.productCategory,
             productDate: product.productDate,
@@ -383,25 +385,26 @@ this.calculateTaktTime();
           };
         });
 
-        console.log('updatedProducts:', updatedProducts);
-        this.products = updatedProducts;
+        console.log('productsWithTaktTime:', productsWithTaktTime);
+        this.products = productsWithTaktTime;
 
         // Update the second source with the new array of objects
-        this.secondSource.load(updatedProducts);
-        this.productService.updateProducts(updatedProducts).subscribe(
+        this.secondSource.load(productsWithTaktTime);
+        this.productService.updateProducts(productsWithTaktTime).subscribe(
           (updatedProducts) => {
             console.log('Products updated:', updatedProducts);
           },
           (error) => {
             console.error('Error updating products', error);
-          }
+          },
         );
       },
       (error) => {
         console.error('Error getting products', error);
-      }
+      },
     );
   }
+
   removeOrder(index: number) {
     this.products = this.products.filter((product) => product.idProduct !== this.selectedProduct?.idProduct);
     const orders = this.getOrdersForSelectedProduct();
@@ -493,7 +496,7 @@ this.calculateTaktTime();
         },
         (error) => {
           console.error('Error updating daily production goal:', error);
-        }
+        },
       );
       product.DailyProductionGoal = DailyProductionGoal;
 
@@ -583,7 +586,7 @@ this.calculateTaktTime();
 
     const newHeijunkaBox: HeijunkaBox = {
       idBox: undefined,
-      title:this.fourthForm.get('title').value,
+      title: this.fourthForm.get('title').value,
       productionPlan: this.productionPlan,
       products: this.selectedRows,
       schedule: this.schedule,

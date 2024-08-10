@@ -94,6 +94,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
             link: '/pages/lean/heijunka',
           },
           {
+            title: 'Archive',
+            icon: 'archive-outline',
+            link: '/pages/lean/heijunka/archive',
+          },
+          {
             title: 'Dashboard',
             icon: 'pie-chart-outline',
             link: '/pages/lean/heijunka/dashboard',

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface HeijunkaBoxRepo extends MongoRepository<HeijunkaBox, String> {
     List<HeijunkaBox> findAll(Sort sort);
+    List<HeijunkaBox> findByArchived(boolean archived);
+
 }

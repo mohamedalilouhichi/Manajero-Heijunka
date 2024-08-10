@@ -19,8 +19,8 @@
         <span class="card__category">Added {{ getFormattedTimestamp(box) }}</span>
 
       </div>
-      <button class="card__delete" (click)="deleteHeijunkaBox(box.idBox, $event)">
-        <i class="fa fa-trash"></i>
+      <button class="card__delete" (click)="archiveHeijunkaBox(box.idBox, $event)">
+        <i class="fa fa-archive"></i>
       </button>
     </article>
   </section>

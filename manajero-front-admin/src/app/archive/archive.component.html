@@ -1,0 +1,47 @@
+<nb-card>
+<nb-tabset fullWidth>
+  <nb-tab tabTitle="Archived Heijunka Cards">
+    <nb-card>
+      <nb-card-header>Archived Heijunka Cards</nb-card-header>
+      <nb-card-body>
+        <div class="wrapper">
+          <section class="cards">
+            <article class="card" *ngFor="let box of archivedHeijunkaBoxes">
+              <div class="card__img">
+                <img src="../../assets/heijunka/calendar.jpg" alt="Heijunka Box Image" class="card-img-top">
+              </div>
+              <a href="#" class="card_link">
+                <div class="card__img--hover"></div>
+              </a>
+
+              <div class="card__info">
+                <div>
+                  <span class="card__by">
+                    <a class="card__author" title="author">{{box.title}}</a>
+                  </span>
+                </div>
+                <h3 class="card__title">{{box.notes}}</h3>
+                <span class="card__category">Added {{ getFormattedTimestamp(box) }}</span>
+              </div>
+              <button class="card__restore" (click)="restoreHeijunkaBox(box.idBox, $event)">
+                <i class="fa fa-undo"></i>
+              </button>
+            </article>
+          </section>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+  <!-- Tab for Products -->
+  <nb-tab tabTitle="Archived Products">
+    <nb-card>
+      <nb-card-header>Archived Products</nb-card-header>
+      <nb-card-body>
+        <!-- Your content for Products goes here -->
+        <p>List of products will be displayed here.</p>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+</nb-tabset>
+</nb-card>
+```

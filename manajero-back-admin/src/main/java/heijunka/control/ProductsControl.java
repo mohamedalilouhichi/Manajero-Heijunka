@@ -5,6 +5,7 @@ import heijunka.repository.ProductRepo;
 import heijunka.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,10 +45,15 @@ private final ProductRepo productRepository;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {  // Changer Long à String
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") String id) {
+        try {
+            productService.deleteProduct(id); // Perform delete operation with String ID
+            return ResponseEntity.noContent().build(); // Success response
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Error response
+        }
     }
+
     @PutMapping("/{id}/takt-time")
     public ResponseEntity<Product> updateProductTaktTime(@PathVariable String id, @RequestBody double taktTime) {
         Product updatedProduct = productService.updateProductTaktTime(id, taktTime);

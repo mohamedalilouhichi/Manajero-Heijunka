@@ -1,5 +1,3 @@
-
-<!-- HTML -->
 <div class="button-container">
   <button class="btn btn-sm btn-black" style="width: 400px;" (click)="openAddProductDialog()"> ADD PRODUCT </button>
 </div>
@@ -8,8 +6,13 @@
   <nb-card-header>Product List</nb-card-header>
   <nb-card-body>
     <div class="table-container">
-      <ng2-smart-table [settings]="settings" [source]="source" ></ng2-smart-table>
-
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (editConfirm)="onEditConfirm($event)"
+        (deleteConfirm)="onDeleteConfirm($event)">
+      </ng2-smart-table>
     </div>
   </nb-card-body>
 </nb-card>
+
