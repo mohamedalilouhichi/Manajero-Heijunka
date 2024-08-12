@@ -4,6 +4,7 @@
     <nb-tabset  fullWidth>
       <nb-tab tabTitle="Add Products">
         <ngx-product-list></ngx-product-list>
+
       </nb-tab>
       <nb-tab tabTitle="Leveling Algorithm">
         <nb-card class="col-md-12 col-lg-12 col-xxxl-12">
@@ -68,10 +69,6 @@
 
           <button *ngIf="selectedProduct" _ngcontent-wtv-c238="" nbbutton="" matripple=""style="margin-left:20px;margin-top:-10px" class="mat-ripple appearance-filled size-tiny shape-rectangle status-basic ng-star-inserted nb-transition"
                   aria-disabled="false" tabindex="0"type="button" (click)="formAdd()">Add Order</button>
-            <p *ngIf="showTaktTime && availableTime !== null && selectedProduct" style="margin-left: 650px;">
-              Takt Time for {{ selectedProduct?.productName }}:
-              {{ selectedProduct.takttime | number: '1.2-2' }} hours
-            </p>
           <div formArrayName="orders">
             <div
               *ngFor="let order of getOrdersForSelectedProduct().controls; let i = index"
@@ -94,7 +91,22 @@
                   placeholder="Quantity"
                   formControlName="quantity"
                 />
+
               </div>
+              <button
+                _ngcontent-wtv-c238=""
+                nbbutton=""
+                matripple=""
+                class="mat-ripple appearance-filled size-tiny shape-semi-round ng-star-inserted nb-transition"
+                [ngClass]="{
+    'status-danger': order.get('status')?.value !== 'Done',
+    'status-success': order.get('status')?.value === 'Done'
+  }"
+                aria-disabled="false" tabindex="0" type="button"
+                (click)="toggleOrderStatus(order)"
+              >
+                {{ order.get('status')?.value }}
+              </button>
               <button _ngcontent-wtv-c238="" nbbutton="" matripple="" class="mat-ripple appearance-filled size-tiny shape-semi-round status-danger ng-star-inserted nb-transition" aria-disabled="false" tabindex="0" type="button" (click)="removeOrder(i)">Remove</button>
 
             </div>
@@ -106,7 +118,7 @@
               fullWidth
               fieldSize="small"
               placeholder="Total Orders"
-              formControlName="quantity"
+              formControlName="totalQuantity"
               readonly
               style="margin-right: 10px"
             />
@@ -132,6 +144,19 @@
 
 
         </form>
+      <div *ngIf="showMissingOrderMessage" class="missing-order-message">
+        <div class="alert alert-success" role="alert">
+          Please add an order to <strong>{{missingProductName}} </strong>or unselect it from the first Step.
+        </div>
+      </div>
+      <div *ngIf="showTaktTimeMessage" class="missing-order-message">
+        <div class="alert alert-success" role="alert">
+          <strong>Takt time</strong> is successfully calculated for all products. Check step four for results.
+          <br>
+          <strong>NB:</strong> Orders with a <strong>Done</strong> status are excluded from the takt time calculation.
+        </div>
+
+      </div>
         <button nbButton nbStepperPrevious>prev</button>
         <button nbButton nbStepperNext>next</button>
         <div *ngIf="ordersAddedSuccessfully" class="alert alert-success">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {ProductService} from './product.service';
@@ -10,6 +10,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ProductsComponent {
   productForm: FormGroup;
+  @Output() productAdded = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder, private http: HttpClient, protected dialogRef: NbDialogRef<ProductsComponent>
               , private productService: ProductService) {
@@ -31,6 +32,8 @@ export class ProductsComponent {
         .subscribe({
           next: (response) => {
             console.log('Product created successfully', response);
+            this.productAdded.emit(); // Notify parent component
+
           },
           error: (error) => {
             console.error('Error creating product:', error);

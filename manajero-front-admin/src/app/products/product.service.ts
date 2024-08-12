@@ -28,5 +28,18 @@ export class ProductService {
   updateProduct(id: string, product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
   }
+  archiveProduct(id: string): Observable<Product> {
+    return this.http.patch<Product>(`${this.apiUrl}/${id}/archive`, {});
+  }
+  getArchivedProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/archived`, {});
+  }
+  restoreProduct(idProduct: string): Observable<Product> {
+    return this.http.patch<Product>(`${this.apiUrl}/${idProduct}/restore`, {});
+  }
+
+getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
 
 }

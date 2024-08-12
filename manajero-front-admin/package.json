@@ -43,7 +43,7 @@
     "@asymmetrik/ngx-leaflet": "3.0.1",
     "@kolkov/angular-editor": "^3.0.0-beta.0",
     "@nebular/auth": "11.0.1",
-    "@nebular/eva-icons": "11.0.1",
+    "@nebular/eva-icons": "^11.0.1",
     "@nebular/security": "11.0.1",
     "@nebular/theme": "11.0.1",
     "@swimlane/ngx-charts": "^14.0.0",

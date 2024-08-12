@@ -144,6 +144,19 @@ body {
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
   transform: scale(1.10, 1.10);
 }
+body {
+  background-image: url('../../assets/heijunka/sakura.png');
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; /* Ensure the background covers the entire body */
+  font-family: Arial, sans-serif; /* Use a common font for readability */
+}
+nb-card {
+  opacity: 0.9;
+
+}
+
 
 
 

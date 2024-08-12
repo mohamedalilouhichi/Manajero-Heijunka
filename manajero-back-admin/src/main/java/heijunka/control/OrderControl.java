@@ -1,6 +1,7 @@
 package heijunka.control;
 
 import heijunka.entite.Orders;
+import heijunka.repository.OrderRepo;
 import heijunka.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/order")
 
 public class OrderControl {
     private final OrderService ordersService;
+    private final OrderRepo ordersRepo;
 
     @Autowired
-    public OrderControl(OrderService ordersService) {
+    public OrderControl(OrderService ordersService, OrderRepo ordersRepo) {
         this.ordersService = ordersService;
+        this.ordersRepo = ordersRepo;
     }
 
     @PostMapping("/{productId}")
@@ -55,6 +61,12 @@ public class OrderControl {
     public ResponseEntity<List<Orders>> getOrdersByProductId(@PathVariable String productId) {
         List<Orders> orders = ordersService.getOrdersByProductId(productId);
         return ResponseEntity.ok(orders);
+    }
+    @PatchMapping("/{id}/status")
+    public Orders updateOrderStatus(@PathVariable String id, @RequestBody Map<String, String> statusUpdate) {
+        Orders order = ordersRepo.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(statusUpdate.get("status"));
+        return ordersRepo.save(order);
     }
 
 }

@@ -6,12 +6,17 @@ import heijunka.entite.Product;
 import heijunka.repository.OrderRepo;
 import heijunka.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Configuration
+@EnableScheduling
 public class OrderService implements IOrderService {
 
     private final OrderRepo ordersRepository;
@@ -37,6 +42,8 @@ public class OrderService implements IOrderService {
             // Ensure orders are associated with the product
             for (Orders order : orders) {
                 order.setProduct(product);
+                order.setStatus("Not Done");
+
             }
 
             // Save orders and update product details
@@ -113,5 +120,14 @@ public class OrderService implements IOrderService {
     public List<Orders> getOrdersByProductId(String productId) {
         return ordersRepository.findByProductId(productId);
     }
-
+    @Scheduled(cron = "* * * * * MON")
+    public void updateOrderStatusToDone() {
+        List<Orders> orders = ordersRepository.findAll();
+        orders.forEach(order -> {
+            if (!"Done".equals(order.getStatus())) {
+                order.setStatus("Done");
+                ordersRepository.save(order);
+            }
+        });
+    }
 }

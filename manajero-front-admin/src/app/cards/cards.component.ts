@@ -12,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class CardsComponent implements OnInit {
   heijunkaBoxes: HeijunkaBox[];
+  showArchiveMessage = false;
 
   constructor(private heijunkaboxService: HeijunkaboxService, private datePipe: DatePipe, private router: Router,
               private route: ActivatedRoute ) { }
@@ -44,7 +45,11 @@ export class CardsComponent implements OnInit {
       this.heijunkaboxService.archiveHeijunkaBox(idBox).subscribe(() => {
         // Refresh the list after archiving
         this.heijunkaBoxes = this.heijunkaBoxes.filter(box => box.idBox !== idBox);
+        this.showArchiveMessage = true;
       });
     }
+  }
+  goToArchive() {
+    this.router.navigate(['/pages/lean/heijunka/archive']);
   }
 }

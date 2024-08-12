@@ -5,6 +5,7 @@ import { ProductsComponent } from '../products/products.component';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ProductService } from '../products/product.service';
 import {DatePipe} from '@angular/common';
+import 'eva-icons';
 
 @Component({
   selector: 'ngx-product-list',
@@ -15,11 +16,12 @@ export class ProductListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   products: any[] = [];
 
+
   settings = {
     actions: {
       add: false,
-      edit: true,
       delete: true,
+      edit: true,
     },
     columns: {
       productName: {
@@ -51,16 +53,16 @@ export class ProductListComponent implements OnInit {
         editable: true,
       },
     },
+    delete: {
+      confirmDelete: true,
+      deleteButtonContent: '<i class="fa fa-archive fa-xs"></i>',
+      confirmDeleteMessage: 'Are you sure you want to delete this product?',
+    },
     edit: {
       confirmSave: true,
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      confirmDelete: true,
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDeleteMessage: 'Are you sure you want to delete this product?',
     },
   };
 
@@ -68,34 +70,74 @@ export class ProductListComponent implements OnInit {
               private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    this.productService.getAllProducts().subscribe((products) => {
-      this.products = products;
-      this.source.load(this.products);
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        console.log('Fetched Products:', products); // Log the fetched products
+        this.products = products.filter((product) => !product.archived);
+        console.log('Filtered Products:', this.products); // Log filtered products
+        this.source.load(this.products);
+      },
+      error: (error) => {
+        console.error('Error loading products', error);
+      },
     });
   }
 
+
   openAddProductDialog() {
-    const dialogConfig = {
-      context: {
-        title: 'Ajouter un Produit'}};
-    this.dialogService.open(ProductsComponent);
+    const dialogRef = this.dialogService.open(ProductsComponent);
+
+    // Subscribe to the productAdded event from the dialog
+    dialogRef.componentRef.instance.productAdded.subscribe(() => {
+      this.loadProducts(); // Reload products when a new product is added
+    });
+
+    // Ensure products are reloaded when the dialog is closed, even if no product is added
+    dialogRef.onClose.subscribe(() => {
+      this.loadProducts();
+    });
+  }
+  loadProducts() {
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        console.log('Fetched Products:', products);
+        this.products = products.filter((product) => !product.archived);
+        console.log('Filtered Products:', this.products);
+        this.source.load(this.products);
+      },
+      error: (error) => {
+        console.error('Error loading products', error);
+      },
+    });
   }
 
   onDeleteConfirm(event: any): void {
-
-    if (window.confirm('Are you sure you want to delete this product?')) {
+    if (window.confirm('Are you sure you want to archive this product?')) {
       if (event.data && event.data.idProduct) {
+        console.log('Archiving product with ID:', event.data.idProduct);
         const id = event.data.idProduct.toString();
-        this.productService.deleteProduct(id).subscribe({
-          next: () => {
-            console.log('Product deleted successfully');
+        this.productService.archiveProduct(id).subscribe({
+          next: (archivedProduct) => {
+            console.log('Product archived successfully');
             this.source.remove(event.data);
-            event.confirm.resolve();
+            this.productService.getAllProducts().subscribe({
+              next: (products) => {
+                console.log('Fetched Products:', products);
+                this.products = products.filter((product) => !product.archived);
+                console.log('Filtered Products:', this.products);
+                this.source.load(this.products);
+              },
+              error: (error) => {
+                console.error('Error loading products', error);
+              },
+            });
+            event.confirm.resolve(archivedProduct); // Resolve the event to update the table
           },
           error: (error) => {
-            console.error('Delete failed', error);
+            console.error('Archiving failed', error);
             event.confirm.reject();
-          }});
+          },
+        });
       } else {
         console.error('ID is undefined or null');
         event.confirm.reject();

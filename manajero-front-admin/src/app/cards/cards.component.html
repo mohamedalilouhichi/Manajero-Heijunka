@@ -24,4 +24,10 @@
       </button>
     </article>
   </section>
+  <div *ngIf="showArchiveMessage" class="archive-message">
+    <div class="alert alert-success" role="alert">
+      <strong>Heijunka Box archived!</strong> Heijunka Box has been archived successfully!
+      <button type="button" class="btn-black" (click)="goToArchive()">Go to Archive</button>
+    </div>
+  </div>
 </div>

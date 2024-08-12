@@ -6,4 +6,7 @@ export interface Orders {
   quantity: number;
   product?: Product;
 
+  status: string;
+
+
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ProductsControl {
     @Autowired
     private ProductService productService;
-private final ProductRepo productRepository;
+    private final ProductRepo productRepository;
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);
@@ -97,5 +97,27 @@ private final ProductRepo productRepository;
     public ResponseEntity<List<Product>> updateProducts(@RequestBody List<Product> products) {
         List<Product> updatedProducts = productService.updateProducts(products);
         return ResponseEntity.ok(updatedProducts);
+    }
+    @PatchMapping("/{id}/archive")
+    public ResponseEntity<Product> archiveProduct(@PathVariable String id) {
+        Product archivedProduct = productService.archiveProduct(id);
+        return archivedProduct != null ? ResponseEntity.ok(archivedProduct) : ResponseEntity.notFound().build();
+    }
+
+
+
+    @GetMapping("/archived")
+    public ResponseEntity<List<Product>> getArchivedProducts() {
+        List<Product> archivedProducts = productService.getArchivedProducts();
+        return ResponseEntity.ok(archivedProducts);
+    }
+    @PatchMapping("/{id}/restore")
+    public ResponseEntity<Product> restoreProduct(@PathVariable String id) {
+        try {
+            Product restoredProduct = productService.restoreProduct(id);
+            return restoredProduct != null ? ResponseEntity.ok(restoredProduct) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

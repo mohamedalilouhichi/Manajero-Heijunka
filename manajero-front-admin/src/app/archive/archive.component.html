@@ -1,8 +1,9 @@
+<body>
 <nb-card>
-<nb-tabset fullWidth>
-  <nb-tab tabTitle="Archived Heijunka Cards">
+<nb-tabset fullWidth >
+  <nb-tab tabTitle="Archived Cards">
     <nb-card>
-      <nb-card-header>Archived Heijunka Cards</nb-card-header>
+      <nb-card-header>Archived Heijunka Cards :</nb-card-header>
       <nb-card-body>
         <div class="wrapper">
           <section class="cards">
@@ -35,13 +36,16 @@
   <!-- Tab for Products -->
   <nb-tab tabTitle="Archived Products">
     <nb-card>
-      <nb-card-header>Archived Products</nb-card-header>
+      <nb-card-header>
+        Archived Products
+      </nb-card-header>
       <nb-card-body>
-        <!-- Your content for Products goes here -->
-        <p>List of products will be displayed here.</p>
+        <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
       </nb-card-body>
     </nb-card>
+
+
   </nb-tab>
 </nb-tabset>
 </nb-card>
-```
+</body>

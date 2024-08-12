@@ -13,7 +13,9 @@ export class OrderService {
   createOrders(productId: string, orders: Orders[]): Observable<Orders[]> {
     return this.http.post<Orders[]>(`${this.apiUrl}/${productId}`, orders);
   }
-
+  updateOrderStatus(id: string, status: string): Observable<Orders> {
+    return this.http.patch<Orders>(`${this.apiUrl}/${id}/status`, { status });
+  }
 
   updateOrder(id: string, order: Orders): Observable<Orders> {
     return this.http.put<Orders>(`${this.apiUrl}/${id}`, order);

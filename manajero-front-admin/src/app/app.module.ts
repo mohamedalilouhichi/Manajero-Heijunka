@@ -21,10 +21,11 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import {DecimalPipe} from '@angular/common';
+import { RestoreButtonComponent } from './archive/restore-button.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, RestoreButtonComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -36,6 +37,7 @@ import {DecimalPipe} from '@angular/common';
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    NbDialogModule.forRoot(),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),

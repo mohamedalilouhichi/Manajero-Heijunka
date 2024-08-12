@@ -32,6 +32,8 @@ public class Product {
     @JsonProperty("productDate")
 
     private Date productDate ;
+    @JsonProperty("archived")
+    private boolean archived;
     @JsonProperty("totalquantity")
     private int totalquantity ;
     @JsonProperty("takttime")

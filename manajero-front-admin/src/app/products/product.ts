@@ -12,6 +12,7 @@ export interface Product {
   takttime?: number;
   DailyProductionGoal?: number;
   weeklyDemand?: number;
+  archived?: boolean;
   productionPlan?: ProductionPlan;
   orders?: Orders[];
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HeijunkaboxService } from "../LatestHeijunkaBox/heijunkabox.service";
-import { HeijunkaBox } from "../LatestHeijunkaBox/HeijunkaBox";
+import { HeijunkaboxService } from '../LatestHeijunkaBox/heijunkabox.service';
+import { HeijunkaBox } from '../LatestHeijunkaBox/HeijunkaBox';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -59,8 +59,7 @@ export class HeijunkaboxComponent implements OnInit {
     this.heijunkaBoxForm = this.fb.group({
       title: [heijunkaBox.title],
       timestamp: [new Date(heijunkaBox.timestamp).toISOString().split('T')[0]], // Convert to YYYY-MM-DD format
-      notes: [heijunkaBox.notes]
-    });
+      notes: [heijunkaBox.notes]});
   }
 
   edit(): void {

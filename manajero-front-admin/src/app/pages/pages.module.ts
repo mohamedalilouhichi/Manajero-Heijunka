@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import {
-    NbAccordionModule,
-    NbButtonModule,
-    NbCardModule, NbInputModule,
-    NbMenuModule, NbSelectModule,
-    NbStepperModule,
-    NbTabsetModule,
+  NbAccordionModule,
+  NbButtonModule,
+  NbCardModule, NbDialogModule, NbInputModule,
+  NbMenuModule, NbSelectModule,
+  NbStepperModule,
+  NbTabsetModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -50,6 +50,7 @@ import {ArchiveComponent} from '../archive/archive.component';
         Ng2SmartTableModule,
         NbSelectModule,
         NbInputModule,
+      NbDialogModule,
     ],
 
   providers: [DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService],

@@ -81,9 +81,14 @@ body {
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; /* Ensure the background covers the entire body */
+  background-size: contain; /* Ensure the background covers the entire body */
   font-family: Arial, sans-serif; /* Use a common font for readability */
+
 }
+.ng2-smart-checkbox {
+  transform: scale(0.8); /* Scale down the checkbox */
+}
+
 nb-card {
   opacity: 0.9;
 
@@ -93,5 +98,26 @@ nb-card {
   border-radius: 10px; /* Optional: to add some rounding to the corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: to add some shadow */}
 
+.missing-order-message {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  color: #343739;
+  background-color: #d1d3d3;
+  border-color: #757b86;
+}
+
+.alert strong {
+  font-weight: bold;
+}
 
 
