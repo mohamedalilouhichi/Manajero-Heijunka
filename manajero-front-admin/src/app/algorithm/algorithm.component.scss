@@ -69,7 +69,7 @@ ng2-smart-table {
 
 .button-container .btn-black {
   display: block;
-  margin-top: 20px
+  margin-top: 20px;
 }
 .transparent-card {
   background-color: rgba(255, 255, 255, 0.85); /* 85% opacity white background */
@@ -96,7 +96,8 @@ nb-card {
 .stepper {
   background-color: rgba(255, 255, 255, 0.85); /* 85% opacity white background */
   border-radius: 10px; /* Optional: to add some rounding to the corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: to add some shadow */}
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: to add some shadow */
+}
 
 .missing-order-message {
   margin-top: 20px;

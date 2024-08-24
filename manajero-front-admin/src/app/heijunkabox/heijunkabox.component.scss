@@ -7,7 +7,7 @@
 .title {
   text-align: center;
   font-size: 30px;
-font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
 }
 .btn-black {
@@ -29,7 +29,6 @@ font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   border: 1px solid #ffffff;
   border-radius: 5px;
   width: 100%;
-  background-color: #ffffff;
   padding: 20px;
   background-color: #f4f4f4;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -37,6 +36,7 @@ font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 20px auto;
   font-family: 'Roboto', sans-serif;
 }
+
 
 /* Title styling */
 .title {
@@ -66,7 +66,7 @@ font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   border: 1px solid #dedede;
   max-width: 650px;
   margin: 25px auto;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
 }

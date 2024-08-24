@@ -28,12 +28,12 @@ td a {
   margin-right: 10px;
 }
 
-.nb-edit:before {
+.nb-edit::before {
   content: '\270E'; /* Unicode for pencil icon */
   color: green;
 }
 
-.nb-trash:before {
+.nb-trash::before {
   content: '\1F5D1'; /* Unicode for trash can icon */
   color: red;
 }
