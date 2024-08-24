@@ -11,7 +11,7 @@ import { environment } from './environments/environment';
 import { registerLicense } from '@syncfusion/ej2-base';
 
 
-registerLicense('Ngo9BigBOggjHTQxAR8/V1NCaF5cWWFCdkx3Qnxbf1x0ZFRGal1XTnRbUj0eQnxTdEFjXn5WcnZXR2JZVkF1Xg==');
+registerLicense('Ngo9BigBOggjHTQxAR8/V1NCaF1cWWhAYVF0WmFZfVpgdVRMZVpbQXZPMyBoS35RckVrW3xfcXFTQ2FYUkd3');
 
 
 if (environment.production) {

@@ -9,6 +9,7 @@ import {HeijunkaComponent} from '../heijunka/heijunka.component';
 import {AlgorithmComponent} from '../algorithm/algorithm.component';
 import {HeijunkaboxComponent} from '../heijunkabox/heijunkabox.component';
 import {ArchiveComponent} from '../archive/archive.component';
+import {DashboardsComponent} from '../dashboards/dashboards.component';
 
 const routes: Routes = [{
   path: '',
@@ -87,6 +88,10 @@ const routes: Routes = [{
     {
       path: 'lean/heijunka/archive',
       component: ArchiveComponent,
+    },
+    {
+      path: 'lean/heijunka/dashboard',
+      component: DashboardsComponent,
     },
     {
       path: '',

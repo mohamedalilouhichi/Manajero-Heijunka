@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 
 @Component({
@@ -13,11 +13,7 @@ import { NbThemeService } from '@nebular/theme';
   `,
 })
 export class D3PieComponent implements OnDestroy {
-  results = [
-    { name: 'Germany', value: 8940 },
-    { name: 'USA', value: 5000 },
-    { name: 'France', value: 7200 },
-  ];
+  @Input() results: any[] = [];
   showLegend = true;
   showLabels = true;
   colorScheme: any;

@@ -21,9 +21,13 @@ export class ProductService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
-  updateDailyProductionGoal(payload: { idProduct: string; DailyProductionGoal: number }): Observable<Product> {
-    return this.http.patch<Product>(`${this.apiUrl}/${payload.idProduct}/daily-production-goal`,
-      { DailyProductionGoal: payload.DailyProductionGoal });
+  updateDailyProductionGoal(payload: { idProduct: string; dailyProductionGoal: number }): Observable<Product> {
+    return this.http.patch<Product>(`${this.apiUrl}/${payload.idProduct}/daily-production-goal`, {
+      dailyProductionGoal: payload.dailyProductionGoal,  // Lowercase "d"
+    });
+  }
+  updateProductTaktTime(idProduct: string, taktTime: number): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${idProduct}/takt-time`, taktTime);
   }
   updateProduct(id: string, product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, product);

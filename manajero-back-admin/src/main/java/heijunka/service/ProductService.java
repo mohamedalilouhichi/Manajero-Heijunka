@@ -72,6 +72,7 @@ public class ProductService implements IProductService {
         product.setDailyProductionGoal(dailyProductionGoal);
         return productRepo.save(product);
     }
+
     public List<Product> updateProducts(List<Product> products) {
         List<Product> updatedProducts = new ArrayList<>();
         for (Product product : products) {

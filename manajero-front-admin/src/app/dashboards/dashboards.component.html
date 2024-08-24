@@ -1,0 +1,37 @@
+<body>
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Product Categories Distribution</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-pie [results]="pieChartData"></ngx-d3-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Products By Total Quantity</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-bar [results]="barChartData"></ngx-d3-bar>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Products Total Quantity</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-advanced-pie [results]="advancedPieChartData2"></ngx-d3-advanced-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Products Weekly Demand</nb-card-header>
+      <nb-card-body>
+        <ngx-d3-advanced-pie [results]="advancedPieChartData"></ngx-d3-advanced-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+</body>

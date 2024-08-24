@@ -16,7 +16,6 @@ export class ProductListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   products: any[] = [];
 
-
   settings = {
     actions: {
       add: false,

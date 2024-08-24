@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ViewChild, OnInit, EventEmitter, Output, OnDestroy} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { LocalDataSource } from 'ng2-smart-table';
 import {NbStepperComponent, NbTabComponent, NbTabsetComponent} from '@nebular/theme';
@@ -19,7 +19,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './algorithm.component.html',
   styleUrls: ['./algorithm.component.scss'],
 })
-export class AlgorithmComponent implements OnInit {
+export class AlgorithmComponent implements OnInit , OnDestroy {
   @ViewChild('stepper', { static: false }) stepper: NbStepperComponent | undefined;
   @ViewChild(NbTabsetComponent) tabset: NbTabsetComponent;
 
@@ -41,7 +41,6 @@ export class AlgorithmComponent implements OnInit {
   isCalculated: boolean = false;
   showTaktTime: boolean = false;
   totalDemand: number = 0;
-  DailyProductionGoal: number | null = null;
   products: Product[] = []; // Array to store the products fetched from the backend
   productionPlan: ProductionPlan | null = null; // To store the production plan
   title: string = '';
@@ -112,8 +111,10 @@ export class AlgorithmComponent implements OnInit {
       takttime: {
         title: 'Takt Time',
         type: 'number',
-        valuePrepareFunction: (value) => `${value.toFixed(2)} hours`,
         editable: false,
+        valuePrepareFunction: (value) => {
+          return value.toFixed(2);
+        },
       },
       DailyProductionGoal: {
         title: 'Daily Production Goal',
@@ -178,6 +179,10 @@ export class AlgorithmComponent implements OnInit {
     this.formAdd();
     this.productAddedSubscription = this.productAdded.subscribe(() => {
       this.loadProducts();
+    });
+    this.fourthForm = this.fb.group({
+      title: ['No title', []],
+      notes: ['Heijunka box has no description you can edit it and add a note', []],
     });
   }
   private productAddedSubscription: Subscription;
@@ -317,25 +322,48 @@ this.title = this.fourthForm.get('title').value;
         status: 'Not Done', // Set the initial status to 'Not Done'
       }));
 
-      // Fetch existing orders to avoid duplication
+      // Fetch existing orders from the backend
       this.orderService.getOrdersByProductId(productId).subscribe(
         (existingOrders: Orders[]) => {
-          const existingOrderSet = new Set(existingOrders.map(order => `${order.orderName}-${order.quantity}`));
+          // Convert existing orders to a Map for easy lookup, including orderId
+          const existingOrdersMap = new Map(existingOrders.map(order =>
+            [`${order.orderName}-${order.quantity}`, order]));
 
-          // Filter new orders
-          const newOrders = ordersToSave.filter(order => {
-            return order.orderName && order.quantity && !existingOrderSet.has(`${order.orderName}-${order.quantity}`);
+          // Merge existing orders with new orders
+          const allOrders = [...existingOrders]; // Start with existing orders
+          ordersToSave.forEach(order => {
+            const key = `${order.orderName}-${order.quantity}`;
+            if (!existingOrdersMap.has(key)) {
+              // If the order does not exist, add it to the list
+              allOrders.push({ ...order, orderId: null }); // Add new orders with a placeholder for orderId
+            }
           });
 
-          // Send new orders to backend
-          if (newOrders.length > 0) {
-            this.orderService.createOrders(productId, newOrders).subscribe(
+          // Clear the existing form array
+          const orderFormArray = this.getOrdersForSelectedProduct();
+          orderFormArray.clear();
+
+          // Add all orders (existing and new) to the form array
+          allOrders.forEach(order => {
+            const formGroup = this.fb.group({
+              orderName: [order.orderName, Validators.required],
+              quantity: [order.quantity, [Validators.required, Validators.min(1)]],
+              orderId: [order.orderId], // Include the orderId if available
+              status: [order.status], // Include the status attribute
+            });
+            orderFormArray.push(formGroup);
+          });
+
+          // Save new orders to backend if there are any
+          const newOrdersToSave = ordersToSave.filter(order => !existingOrdersMap.has(`${order.orderName}-${order.quantity}`));
+          if (newOrdersToSave.length > 0) {
+            this.orderService.createOrders(productId, newOrdersToSave).subscribe(
               (savedOrders: Orders[]) => {
                 console.log('Orders saved:', savedOrders);
 
-                // Update the status of the new orders in the backend
+                // Update the status of new orders
                 savedOrders.forEach(order => {
-                  this.orderService.updateOrderStatus(order.orderId, order.status).subscribe(
+                  this.orderService.updateOrderStatus(order.orderId, 'Not Done').subscribe(
                     (updatedOrder: Orders) => {
                       console.log('Order status updated:', updatedOrder);
                     },
@@ -344,23 +372,9 @@ this.title = this.fourthForm.get('title').value;
                     });
                 });
 
-                // Update the orders property of the selectedProduct
-                this.selectedProduct.orders = savedOrders;
+                // Update the selectedProduct orders
+                this.selectedProduct.orders = allOrders;
 
-                // Clear existing orders in the form array
-                const orderFormArray = this.getOrdersForSelectedProduct();
-                const lastIndex = orderFormArray.length - 1;
-                orderFormArray.removeAt(lastIndex); // Remove the last order
-
-                // Add saved orders to the form array
-                savedOrders.forEach(savedOrder => {
-                  const formGroup = this.fb.group({
-                    orderName: [savedOrder.orderName, Validators.required],
-                    quantity: [savedOrder.quantity, [Validators.required, Validators.min(1)]],
-                    orderId: [savedOrder.orderId], // Include the generated orderId
-                  });
-                  orderFormArray.push(formGroup);
-                });
                 this.calculateTaktTime();
               },
               (error) => {
@@ -379,66 +393,79 @@ this.title = this.fourthForm.get('title').value;
       console.error('No product selected.');
     }
   }
-  changeOrderStatus(orderId: string, status: string) {
-    this.orderService.updateOrderStatus(orderId, status).subscribe(
-      (updatedOrder: Orders) => {
-        console.log('Order status updated:', updatedOrder);
-        // Update the order status in the form array
-        const orders = this.getOrdersForSelectedProduct();
-        const orderIndex = orders.controls.findIndex((order) => order.get('orderId').value === orderId);
-        if (orderIndex !== -1) {
-          orders.controls[orderIndex].get('status').setValue(status);
-        }
-      },
-      (error) => {
-        console.error('Error updating order status:', error);
-      });
-  }
+  // changeOrderStatus(orderId: string, status: string) {
+  //   this.orderService.updateOrderStatus(orderId, status).subscribe(
+  //     (updatedOrder: Orders) => {
+  //       console.log('Order status updated:', updatedOrder);
+  //       // Update the order status in the form array
+  //       const orders = this.getOrdersForSelectedProduct();
+  //       const orderIndex = orders.controls.findIndex((order) => order.get('orderId').value === orderId);
+  //       if (orderIndex !== -1) {
+  //         orders.controls[orderIndex].get('status').setValue(status);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error updating order status:', error);
+  //     });
+  // }
   toggleOrderStatus(orderControl: AbstractControl<any>): void {
-    console.log('orderControl:', orderControl);
-
-    const status = orderControl.get('status').value;
-    console.log('Status:', status);
+    const status = orderControl.get('status')?.value;
     const newStatus = status === 'Done' ? 'Not Done' : 'Done';
+    const orderId = orderControl.get('orderId')?.value;
+    const orderQuantity = orderControl.get('quantity')?.value;
+
+    console.log('Current Status:', status);
     console.log('New Status:', newStatus);
-    const orderId = orderControl.get('orderId').value;
     console.log('Order ID:', orderId);
-    const orderQuantity = orderControl.get('quantity').value;
     console.log('Order Quantity:', orderQuantity);
 
-    // Assuming you have a way to get the product from the orderId
-    this.orderService.getOrderById(orderId).subscribe((order) => {
-      const productId = order.product.idProduct;
-      console.log('Product ID:', productId);
+    // Update the status in the form control
+    orderControl.get('status')?.setValue(newStatus);
 
-      // Confirm the status change
-      if (confirm(`Are you sure you want to change the status to ${newStatus}?`)) {
-        this.orderService.updateOrderStatus(orderId, newStatus).subscribe(() => {
-          orderControl.get('status').setValue(newStatus);
+    if (orderId) {
+      // Update the status in the backend
+      this.orderService.updateOrderStatus(orderId, newStatus).subscribe(
+        () => {
+          console.log('Order status updated:', newStatus);
 
-          // Update the weekly demand of the product
-          this.productService.getProductById(productId).subscribe((product) => {
-            if (newStatus === 'Done') {
-              product.weeklyDemand -= orderQuantity;
+          // Fetch the updated order details
+          this.orderService.getOrderById(orderId).subscribe((order) => {
+            const productIndex = this.products.findIndex((product) => product.idProduct === order.product.idProduct);
+
+            if (productIndex !== -1) {
+              const product = { ...this.products[productIndex] }; // Create a new product object
+
+              if (newStatus === 'Done') {
+                product.weeklyDemand -= orderQuantity;
+              } else {
+                product.weeklyDemand += orderQuantity;
+              }
+
+              // Update the products array with the modified product
+              this.products[productIndex] = product;
+
+              // Send updated product data to the backend
+              this.productService.updateProduct(order.product.idProduct, product).subscribe(
+                () => {
+                  console.log(`Weekly demand updated for product ${product.productName}`);
+                },
+                (error) => {
+                  console.error(`Error updating weekly demand: ${error}`);
+                });
             } else {
-              product.weeklyDemand += orderQuantity;
+              console.warn(`Product with ID ${order.product.idProduct} not found in the local array`);
+              // Optionally, you can fetch the product from the server and retry
+              this.productService.getProductById(order.product.idProduct).subscribe((product) => {
+                // Update local array and retry
+                this.products.push(product); // Assuming `product` is not in `this.products` array
+                this.toggleOrderStatus(orderControl); // Retry
+              });
             }
-            this.productService.updateProduct(productId, product).subscribe(() => {
-              console.log(`Weekly demand updated for product ${product.productName}`);
-            }, (error) => {
-              console.error(`Error updating weekly demand: ${error}`);
-            });
-          }, (error) => {
-            console.error(`Error getting product: ${error}`);
           });
-        }, (error) => {
-          console.error(`Error updating order status: ${error}`);
-        });
-      }
-    }, (error) => {
-      console.error(`Error getting order: ${error}`);
-    });
-  }  calculateTaktTime() {
+        },
+      );
+    }}
+  calculateTaktTime() {
     this.productService.getAllProducts().subscribe(
       (products) => {
         this.products = products;
@@ -495,19 +522,28 @@ this.title = this.fourthForm.get('title').value;
 
         // Update the second source with the new array of objects
         this.secondSource.load(productsWithTaktTime);
-        this.productService.updateProducts(productsWithTaktTime).subscribe(
-          (updatedProducts) => {
-            console.log('Products updated:', updatedProducts);
-          },
-          (error) => {
-            console.error('Error updating products', error);
-          },
-        );
+        this.updateProductsWithTaktTime(productsWithTaktTime);
       },
       (error) => {
         console.error('Error getting products', error);
       },
     );
+  }
+  updateProductsWithTaktTime(productsWithTaktTime: Product[]): void {
+    // Iterate over each product and update its takt time
+    productsWithTaktTime.forEach(product => {
+      if (product.idProduct && product.takttime != null) {
+        this.productService.updateProductTaktTime(product.idProduct, product.takttime).subscribe(
+          (updatedProduct) => {
+            console.log('Product updated:', updatedProduct);
+          },
+          (error) => {
+            console.error('Error updating product:', error);
+          });
+      } else {
+        console.warn('Product missing id or taktTime:', product);
+      }
+    });
   }
   removeOrder(index: number) {
     this.products = this.products.filter((product) => product.idProduct !== this.selectedProduct?.idProduct);
@@ -590,11 +626,13 @@ this.calculateTaktTime();
 
     this.dailyProductionGoals = this.products.map(product => {
       const weeklyDemand = product.weeklyDemand;
-      const DailyProductionGoal = weeklyDemand / this.productionPlan.WorkDays;
+      const dailyProductionGoal = weeklyDemand / this.productionPlan.WorkDays;  // Lowercase "d"
+
       const payload = {
         idProduct: product.idProduct,
-        DailyProductionGoal: DailyProductionGoal,
+        dailyProductionGoal: dailyProductionGoal,  // Lowercase "d"
       };
+
       this.productService.updateDailyProductionGoal(payload).subscribe(
         (response) => {
           console.log('Daily production goal updated successfully:', response);
@@ -603,15 +641,16 @@ this.calculateTaktTime();
           console.error('Error updating daily production goal:', error);
         },
       );
-      product.DailyProductionGoal = DailyProductionGoal;
 
-      return DailyProductionGoal;
+      product.dailyProductionGoal = dailyProductionGoal;  // Lowercase "d"
 
+      return dailyProductionGoal;
     });
+
     const updatedProducts = this.products.map((product) => ({
       productName: product.productName,
       weeklyDemand: product.weeklyDemand,
-      DailyProductionGoal: this.dailyProductionGoals.find((goal, index) => index === this.products.indexOf(product)),
+      dailyProductionGoal: this.dailyProductionGoals.find((goal, index) => index === this.products.indexOf(product)),
     }));
 
     this.secondSource.load(updatedProducts);

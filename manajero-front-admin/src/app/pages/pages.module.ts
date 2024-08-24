@@ -28,30 +28,33 @@ import {LatestheijunkaboxComponent} from '../LatestHeijunkaBox/latestheijunkabox
 import {CardsComponent} from '../cards/cards.component';
 import {HeijunkaboxComponent} from '../heijunkabox/heijunkabox.component';
 import {ArchiveComponent} from '../archive/archive.component';
+import {DashboardsComponent} from '../dashboards/dashboards.component';
+import {ChartsModule} from './charts/charts.module';
 
 @NgModule({
-    imports: [
-        FormsModule,
-        AngularEditorModule,
-        PagesRoutingModule,
-        ThemeModule,
-        NbMenuModule,
-        DashboardModule,
-        ECommerceModule,
-        MiscellaneousModule,
-        NbCardModule,       // Add NbCardModule
-        NbStepperModule,    // Add NbStepperModule
-        NbButtonModule,
-        NbTabsetModule,
-        NbAccordionModule,
-        HttpClientModule,
-        ScheduleModule,
-        ReactiveFormsModule,
-        Ng2SmartTableModule,
-        NbSelectModule,
-        NbInputModule,
-      NbDialogModule,
-    ],
+  imports: [
+    FormsModule,
+    AngularEditorModule,
+    PagesRoutingModule,
+    ThemeModule,
+    NbMenuModule,
+    DashboardModule,
+    ECommerceModule,
+    MiscellaneousModule,
+    NbCardModule,       // Add NbCardModule
+    NbStepperModule,    // Add NbStepperModule
+    NbButtonModule,
+    NbTabsetModule,
+    NbAccordionModule,
+    HttpClientModule,
+    ScheduleModule,
+    ReactiveFormsModule,
+    Ng2SmartTableModule,
+    NbSelectModule,
+    NbInputModule,
+    NbDialogModule,
+    ChartsModule,
+  ],
 
   providers: [DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService],
   declarations: [
@@ -65,6 +68,7 @@ import {ArchiveComponent} from '../archive/archive.component';
     CardsComponent,
     HeijunkaboxComponent,
     ArchiveComponent,
+    DashboardsComponent,
   ],
 })
 export class PagesModule {

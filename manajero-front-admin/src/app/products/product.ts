@@ -10,7 +10,7 @@ export interface Product {
   productDate: Date;
   totalquantity?: number;
   takttime?: number;
-  DailyProductionGoal?: number;
+  dailyProductionGoal?: number;
   weeklyDemand?: number;
   archived?: boolean;
   productionPlan?: ProductionPlan;

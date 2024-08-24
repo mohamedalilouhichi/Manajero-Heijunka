@@ -38,7 +38,7 @@ public class Product {
     private int totalquantity ;
     @JsonProperty("takttime")
     private double takttime ;
-    @JsonProperty("DailyProductionGoal")
+    @JsonProperty("dailyProductionGoal")
     private double DailyProductionGoal ;
     private int weeklyDemand;
     @DBRef

@@ -4,6 +4,8 @@ import heijunka.entite.Product;
 import heijunka.repository.ProductRepo;
 import heijunka.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @RequestMapping("/products")
 public class ProductsControl {
+    private static final Logger logger = LoggerFactory.getLogger(ProductsControl.class);
+
     @Autowired
     private ProductService productService;
     private final ProductRepo productRepository;
@@ -75,6 +79,8 @@ public class ProductsControl {
                 double newDailyProductionGoal = ((Number) dailyProductionGoal).doubleValue();
                 if (newDailyProductionGoal > 0) {
                     product.setDailyProductionGoal(newDailyProductionGoal);
+                    logger.info("Updated daily production goal for product with ID {}: {}", id, newDailyProductionGoal);
+
                 }
             } else {
                 return ResponseEntity.badRequest().body(null);
@@ -120,4 +126,5 @@ public class ProductsControl {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 }

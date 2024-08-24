@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableMongoRepositories
 @EnableScheduling
-public class TemplateExamenApplication {
+public class Heijunka {
 	public static void main(String[] args) {
-		SpringApplication.run(TemplateExamenApplication.class, args);
+		SpringApplication.run(Heijunka.class, args);
 	}
 }
